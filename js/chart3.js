@@ -6,26 +6,20 @@
   const innerW = W - M.left - M.right;
   const innerH = H - M.top - M.bottom;
 
-  // Cohesive palette — same family used everywhere on the page
-  const FENTANYL = "#a8312a";   // oxblood — the dominant force
-  const RX = "#8a6f4a";   // muted brown — older era prescription
-  const HEROIN = "#6b8e23";   // sage green — middle era
-  const BAND_BG = "#f0eee8";   // cream — softer than full bg, sits behind lines
+  const FENTANYL = "#a8312a";   // oxblood
+  const RX = "#8a6f4a";   // muted brown
+  const HEROIN = "#6b8e23";   // sage green 
+  const BAND_BG = "#f0eee8";   // cream
 
-  fetch("data/01_national_trend.csv")
-    .then(r => r.text())
-    .then(csv => {
-      const rows = csv.trim().split(/\r?\n/).slice(1).map(line => {
-        const f = line.split(",");
-        return {
-          year: Number(f[0]),
-          rx: Number(f[5]),
-          fentanyl: Number(f[6]),
-          heroin: Number(f[7])
-        };
-      });
-      draw(rows.filter(d => d.year >= 1999));
-    });
+  // Load and parse the CSV
+  d3.csv("data/01_national_trend.csv", d => ({
+    year: +d.year,
+    rx: +d.rx_opioids_deaths,
+    fentanyl: +d.fentanyl_deaths,
+    heroin: +d.heroin_deaths
+  })).then(rows => {
+    draw(rows.filter(d => d.year >= 1999));
+  });
 
   function draw(data) {
     const svg = d3.select("#chart3")
@@ -38,14 +32,14 @@
     const yMax = d3.max(data, d => Math.max(d.rx, d.fentanyl, d.heroin));
     const y = d3.scaleLinear().domain([0, yMax]).nice().range([innerH, 0]);
 
-    // ---- Wave bands (behind everything) ----
+    // ---- Wave bands ----
     const waves = [
       { from: 1999, to: 2010, label: "Wave 1", sub: "Prescription opioids", color: RX },
       { from: 2010, to: 2013, label: "Wave 2", sub: "Heroin", color: HEROIN },
       { from: 2013, to: 2024, label: "Wave 3", sub: "Fentanyl", color: FENTANYL }
     ];
 
-    // Shaded background bands (alternating cream / lighter cream)
+    // Shaded background bands
     waves.forEach((w, i) => {
       g.append("rect")
         .attr("x", x(w.from))
@@ -82,7 +76,7 @@
         .text(`${w.from}–${w.to === 2024 ? "present" : w.to}`);
     });
 
-    // Wave separators (thin vertical lines)
+    // Wave separators
     [2010, 2013].forEach(yr => {
       g.append("line")
         .attr("x1", x(yr)).attr("x2", x(yr))
@@ -92,7 +86,7 @@
         .attr("stroke-dasharray", "3 3");
     });
 
-    // ---- Gridlines (in front of bands but behind lines) ----
+    // ---- Gridlines ----
     g.append("g").attr("class", "grid")
       .call(d3.axisLeft(y).tickSize(-innerW).tickFormat("").ticks(6));
 

@@ -1,5 +1,4 @@
 // Shared tooltip helper for every chart.
-// Single tooltip element; charts call window.tooltip.show(html, event) and .hide().
 
 (function () {
   const el = document.getElementById("tooltip");

@@ -1,17 +1,9 @@
 // Hero scroll behavior
 //
-// Sets a single CSS custom property `--hero-scroll` (0 to 1) based on
-// how far the user has scrolled into the hero. The CSS uses this value
-// to drive:
-//   - color of the green "fell faster than ever" → red
-//   - subtle parallax lift on the image
-//
-// All entrance animations are CSS-driven on load. Scroll only progresses
-// once the user actually scrolls.
 
 (function () {
   const hero = document.getElementById("hero");
-  const cue  = document.querySelector(".hero-scroll-cue");
+  const cue = document.querySelector(".hero-scroll-cue");
   if (!hero) return;
 
   function update() {

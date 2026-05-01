@@ -1,8 +1,5 @@
-// The Long Wave — scrollytelling map (Figure 2)
+// Scrollytelling map
 // Loads US map + state data, paints the map by year, swaps year on scroll.
-
-// ---- The eight scroll steps ----
-// Each step: a year, a headline, two paragraphs of prose, and 1-2 states to highlight.
 
 const steps = [
   {
@@ -21,7 +18,7 @@ const steps = [
   },
   {
     year: 2010,
-    headline: "The pills give way to heroin.",
+    headline: "Pills give way to heroin.",
     body: [
       "Reformulations of OxyContin and pill-mill crackdowns close off the legal supply. Many people who became dependent on prescription opioids move to heroin, which is cheaper and more available."
     ]
@@ -35,7 +32,7 @@ const steps = [
   },
   {
     year: 2019,
-    headline: "The pre-pandemic baseline.",
+    headline: "Pre-pandemic baseline.",
     body: [
       "Sixteen states are above 20 per 100,000. Six are above 30. Delaware leads at 43, narrowly ahead of West Virginia. This is the year the country will spend the next five trying to return to."
     ]
@@ -49,32 +46,32 @@ const steps = [
   },
   {
     year: 2023,
-    headline: "The first signs of decline.",
+    headline: "First signs of decline.",
     body: [
       "Opioid deaths begin to fall — about 3 percent nationally. Several Eastern states post double-digit declines. The reversal does not yet reach the West, where Alaska, Oregon, and Washington still rise."
     ]
   },
   {
     year: 2024,
-    headline: "The decline becomes a drop.",
+    headline: "Decline becomes a drop.",
     body: [
       "The national total falls to 54,045 — a 32 percent decline in opioid deaths in a single year. West Virginia's rate drops from 70 to 38. But Alaska, at 37 per 100,000, has barely moved."
     ]
   }
 ];
 
-// FIPS code -> 2-letter postal code. Needed to match TopoJSON state IDs to the CSV.
+// FIPS code to match TopoJSON state IDs to the CSV.
 const fipsToCode = {
-  "01":"AL","02":"AK","04":"AZ","05":"AR","06":"CA","08":"CO","09":"CT","10":"DE",
-  "11":"DC","12":"FL","13":"GA","15":"HI","16":"ID","17":"IL","18":"IN","19":"IA",
-  "20":"KS","21":"KY","22":"LA","23":"ME","24":"MD","25":"MA","26":"MI","27":"MN",
-  "28":"MS","29":"MO","30":"MT","31":"NE","32":"NV","33":"NH","34":"NJ","35":"NM",
-  "36":"NY","37":"NC","38":"ND","39":"OH","40":"OK","41":"OR","42":"PA","44":"RI",
-  "45":"SC","46":"SD","47":"TN","48":"TX","49":"UT","50":"VT","51":"VA","53":"WA",
-  "54":"WV","55":"WI","56":"WY"
+  "01": "AL", "02": "AK", "04": "AZ", "05": "AR", "06": "CA", "08": "CO", "09": "CT", "10": "DE",
+  "11": "DC", "12": "FL", "13": "GA", "15": "HI", "16": "ID", "17": "IL", "18": "IN", "19": "IA",
+  "20": "KS", "21": "KY", "22": "LA", "23": "ME", "24": "MD", "25": "MA", "26": "MI", "27": "MN",
+  "28": "MS", "29": "MO", "30": "MT", "31": "NE", "32": "NV", "33": "NH", "34": "NJ", "35": "NM",
+  "36": "NY", "37": "NC", "38": "ND", "39": "OH", "40": "OK", "41": "OR", "42": "PA", "44": "RI",
+  "45": "SC", "46": "SD", "47": "TN", "48": "TX", "49": "UT", "50": "VT", "51": "VA", "53": "WA",
+  "54": "WV", "55": "WI", "56": "WY"
 };
 
-// Color bins for the choropleth. Same bins for every year so colors mean the same thing.
+// Color bins for the choropleth.
 const colorBins = [5, 10, 20, 35, 50];
 const colorRamp = ["#a8c79a", "#d9e09a", "#f3d57a", "#e89456", "#c95a2e", "#7a1a1a"];
 const noDataColor = "#e8e8e0";
@@ -87,7 +84,7 @@ function fillForRate(rate) {
   return colorRamp[colorRamp.length - 1];
 }
 
-// Bubble radius from total deaths. Uses square root so doubling deaths doesn't double area.
+// Bubble radius from total deaths.
 function bubbleRadius(deaths) {
   if (!deaths || deaths < 1) return 0;
   return Math.sqrt(deaths) * 0.30;
@@ -101,23 +98,17 @@ let currentYear = 1999;
 
 async function buildMap() {
 
-  // Load the US shapes and the data in parallel.
-  const [topology, csvText] = await Promise.all([
-    fetch("data/us-states.topojson").then(r => r.json()),
-    fetch("data/02_state_map.csv").then(r => r.text())
+  // Load map shapes and state data.
+  const [topology, rows] = await Promise.all([
+    d3.json("data/us-states.topojson"),
+    d3.csv("data/02_state_map.csv", d => ({
+      state: d.state,
+      name: d.state_name,
+      year: +d.year,
+      rate: d.rate_per_100k === "" ? null : +d.rate_per_100k,
+      deaths: d.deaths === "" ? null : +d.deaths
+    }))
   ]);
-
-  // Parse the CSV manually. Five columns: state, state_name, year, rate, deaths.
-  const rows = csvText.trim().split("\n").slice(1).map(line => {
-    const [state, name, year, rate, deaths] = line.split(",");
-    return {
-      state: state,
-      name: name,
-      year: Number(year),
-      rate: rate === "" ? null : Number(rate),
-      deaths: deaths === "" ? null : Number(deaths)
-    };
-  });
 
   // Index by "state_year" for fast lookup when painting.
   const data = new Map();
@@ -127,12 +118,11 @@ async function buildMap() {
   const features = topojson.feature(topology, topology.objects.states).features;
 
   // Albers USA projection. Scale 1100 keeps Alaska's inset fully inside the 975x610 viewBox.
-  // The Albers USA projection places AK in the bottom-left as an inset; at higher scales
-  // it bleeds off the lower edge of the SVG. 1100 is the largest value where AK fits cleanly.
+  // The Albers USA projection places AK in the bottom-left as an inset.
   const projection = d3.geoAlbersUsa().scale(1100).translate([487.5, 290]);
   const path = d3.geoPath(projection);
 
-  // Pre-compute the centroid of each state. We'll place bubbles and callouts here.
+  // Pre-compute the centroid of each state.
   const centroids = new Map();
   features.forEach(f => {
     const code = fipsToCode[String(f.id).padStart(2, "0")];
@@ -157,37 +147,23 @@ async function buildMap() {
     .on("mousemove", function (event, f) {
       const code = fipsToCode[String(f.id).padStart(2, "0")];
       if (!code) return;
+
       const year = currentYear;
       const row = data.get(code + "_" + year);
-      const tip = document.getElementById("tooltip");
-      if (!tip) { console.warn("tooltip element missing"); return; }
       const rate = row && row.rate != null ? row.rate.toFixed(1) : "—";
       const deaths = row && row.deaths != null ? row.deaths.toLocaleString() : "—";
-      tip.innerHTML = `
+
+      const html = `
         <div class="tip-name">${f.properties.name}</div>
         <div class="tip-year">${year}</div>
         <div class="tip-row"><span>Rate per 100k</span><span class="tip-val">${rate}</span></div>
         <div class="tip-row"><span>Total deaths</span><span class="tip-val">${deaths}</span></div>
       `;
-      tip.style.cssText = `
-        position: fixed;
-        display: block;
-        pointer-events: none;
-        background: #1a1612;
-        color: #fff;
-        padding: 10px 12px;
-        font-size: 12px;
-        line-height: 1.4;
-        z-index: 9999;
-        min-width: 160px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-        left: ${event.clientX + 14}px;
-        top: ${event.clientY + 14}px;
-      `;
+
+      if (window.tooltip) window.tooltip.show(html, event);
     })
     .on("mouseleave", function () {
-      const tip = document.getElementById("tooltip");
-      if (tip) tip.style.display = "none";
+      if (window.tooltip) window.tooltip.hide();
     });
 
   // Layer 2: bubbles for raw deaths.
@@ -204,7 +180,7 @@ async function buildMap() {
     .attr("r", 0)
     .attr("opacity", 0);
 
-  // Layer 3: callout labels. Drawn on each step change, into this group.
+  // Layer 3: callout labels.
   const calloutGroup = svg.append("g").attr("class", "callouts");
 
   // Paint the map for one step.
@@ -236,14 +212,14 @@ async function buildMap() {
     calloutGroup.selectAll("*").remove();
 
     // ---- DATA-DRIVEN ANNOTATIONS ----
-    // For each year, compute two notable states from the data itself:
+    // For each year, two notable states from the data itself:
     //   1. The state with the highest rate per 100,000 that year
     //   2. The state with the highest total deaths that year
     // If the same state holds both, one combined annotation; otherwise two.
     const yearRows = rows.filter(r => r.year === year && r.rate != null && r.deaths != null);
     if (yearRows.length === 0) return;
 
-    const topByRate   = yearRows.reduce((a, b) => (a.rate   >= b.rate   ? a : b));
+    const topByRate = yearRows.reduce((a, b) => (a.rate >= b.rate ? a : b));
     const topByDeaths = yearRows.reduce((a, b) => (a.deaths >= b.deaths ? a : b));
 
     const annotations = [];
@@ -251,7 +227,7 @@ async function buildMap() {
       // Same state holds both records — one callout, two stat lines.
       annotations.push({
         state: topByRate.state,
-        name:  topByRate.name,
+        name: topByRate.name,
         lines: [
           `Highest rate · ${topByRate.rate}/100k`,
           `Highest deaths · ${topByDeaths.deaths.toLocaleString()}`
@@ -260,12 +236,12 @@ async function buildMap() {
     } else {
       annotations.push({
         state: topByRate.state,
-        name:  topByRate.name,
+        name: topByRate.name,
         lines: [`Highest rate · ${topByRate.rate}/100k`]
       });
       annotations.push({
         state: topByDeaths.state,
-        name:  topByDeaths.name,
+        name: topByDeaths.name,
         lines: [`Highest deaths · ${topByDeaths.deaths.toLocaleString()}`]
       });
     }
@@ -316,7 +292,6 @@ async function buildMap() {
   return showStep;
 }
 
-
 // ---- Build the prose steps ----
 
 function buildSteps() {
@@ -338,8 +313,7 @@ function buildSteps() {
   });
 }
 
-
-// ---- Wire up scrollama ----
+// ---- scrollama ----
 
 function wireScroll(showStep) {
   const scroller = scrollama();
@@ -348,17 +322,14 @@ function wireScroll(showStep) {
     step: ".step",
     offset: 0.6
   })
-  .onStepEnter(({ element, index }) => {
-    document.querySelectorAll(".step").forEach(s => s.classList.remove("is-active"));
-    element.classList.add("is-active");
-    showStep(index);
-  });
+    .onStepEnter(({ element, index }) => {
+      document.querySelectorAll(".step").forEach(s => s.classList.remove("is-active"));
+      element.classList.add("is-active");
+      showStep(index);
+    });
 
   window.addEventListener("resize", scroller.resize);
 }
-
-
-// ---- Boot ----
 
 async function main() {
   buildSteps();

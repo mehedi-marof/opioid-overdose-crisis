@@ -6,8 +6,8 @@
   const innerW = W - M.left - M.right;
   const innerH = H - M.top - M.bottom;
 
-  const ABOVE = "#a8312a";   // oxblood — still above baseline
-  const BELOW = "#6b8e23";   // sage green — recovered below baseline
+  const ABOVE = "#a8312a";   // oxblood
+  const BELOW = "#6b8e23";   // sage green
 
   // Full state name lookup for tooltip
   const STATE_NAMES = {
@@ -43,23 +43,19 @@
   let allData = [];
   let currentView = "v23";
 
-  fetch("data/04_state_recovery.csv")
-    .then(r => r.text())
-    .then(csv => {
-      allData = csv.trim().split(/\r?\n/).slice(1).map(line => {
-        const f = line.split(",");
-        return {
-          state: f[0],
-          r19: Number(f[1]),
-          r23: Number(f[2]),
-          r24: Number(f[3]),
-          pct19_24: Number(f[4]),
-          pct23_24: Number(f[5])
-        };
-      });
-      render(currentView);
-      bindToggle();
-    });
+  // Load and parse the CSV
+  d3.csv("data/04_state_recovery.csv", d => ({
+    state: d.state,
+    r19: +d.rate_2019,
+    r23: +d.rate_2023,
+    r24: +d.rate_2024,
+    pct19_24: +d.pct_change_2019_2024,
+    pct23_24: +d.pct_change_2023_2024
+  })).then(rows => {
+    allData = rows;
+    render(currentView);
+    bindToggle();
+  });
 
   function render(view) {
     const titleEl = document.getElementById("chart4-title");

@@ -6,22 +6,17 @@
   const innerW = W - M.left - M.right;
   const innerH = H - M.top - M.bottom;
 
-  const DRUG = "#8a6f4a";
+  const DRUG = "#8a6f4a"; 
   const OPIOID = "#a8312a";
 
-  fetch("data/01_national_trend.csv")
-    .then(r => r.text())
-    .then(csv => {
-      const rows = csv.trim().split(/\r?\n/).slice(1).map(line => {
-        const f = line.split(",");
-        return {
-          year: Number(f[0]),
-          opioid: Number(f[1]),
-          total: Number(f[2])
-        };
-      });
-      draw(rows.filter(d => d.year >= 1999));
-    });
+  // Load and parse the CSV 
+  d3.csv("data/01_national_trend.csv", d => ({
+    year: +d.year,
+    opioid: +d.opioid_deaths,
+    total: +d.all_drug_deaths
+  })).then(rows => {
+    draw(rows.filter(d => d.year >= 1999));
+  });
 
   function draw(data) {
     const svg = d3.select("#chart1")
