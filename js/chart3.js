@@ -1,9 +1,4 @@
 // Chart 3 — Three waves of an American epidemic
-// Three drug-type lines: prescription, heroin, fentanyl. 1999–2024.
-// Wave bands shaded behind:
-//   Wave 1: 1999–2010  Prescription
-//   Wave 2: 2010–2013  Heroin
-//   Wave 3: 2013–2024  Fentanyl
 
 (function () {
   const W = 960, H = 480;
@@ -13,9 +8,9 @@
 
   // Cohesive palette — same family used everywhere on the page
   const FENTANYL = "#a8312a";   // oxblood — the dominant force
-  const RX       = "#8a6f4a";   // muted brown — older era prescription
-  const HEROIN   = "#6b8e23";   // sage green — middle era
-  const BAND_BG  = "#f0eee8";   // cream — softer than full bg, sits behind lines
+  const RX = "#8a6f4a";   // muted brown — older era prescription
+  const HEROIN = "#6b8e23";   // sage green — middle era
+  const BAND_BG = "#f0eee8";   // cream — softer than full bg, sits behind lines
 
   fetch("data/01_national_trend.csv")
     .then(r => r.text())
@@ -45,9 +40,9 @@
 
     // ---- Wave bands (behind everything) ----
     const waves = [
-      { from: 1999, to: 2010, label: "Wave 1",  sub: "Prescription opioids", color: RX },
-      { from: 2010, to: 2013, label: "Wave 2",  sub: "Heroin",               color: HEROIN },
-      { from: 2013, to: 2024, label: "Wave 3",  sub: "Fentanyl",             color: FENTANYL }
+      { from: 1999, to: 2010, label: "Wave 1", sub: "Prescription opioids", color: RX },
+      { from: 2010, to: 2013, label: "Wave 2", sub: "Heroin", color: HEROIN },
+      { from: 2013, to: 2024, label: "Wave 3", sub: "Fentanyl", color: FENTANYL }
     ];
 
     // Shaded background bands (alternating cream / lighter cream)
@@ -162,7 +157,7 @@
       .attr("y1", 0).attr("y2", innerH)
       .attr("stroke", "#888").attr("stroke-width", 1);
     const dotFen = focus.append("circle").attr("r", 5).attr("fill", FENTANYL).attr("stroke", "#fff").attr("stroke-width", 2);
-    const dotRx  = focus.append("circle").attr("r", 5).attr("fill", RX).attr("stroke", "#fff").attr("stroke-width", 2);
+    const dotRx = focus.append("circle").attr("r", 5).attr("fill", RX).attr("stroke", "#fff").attr("stroke-width", 2);
     const dotHer = focus.append("circle").attr("r", 5).attr("fill", HEROIN).attr("stroke", "#fff").attr("stroke-width", 2);
 
     const bisect = d3.bisector(d => d.year).left;

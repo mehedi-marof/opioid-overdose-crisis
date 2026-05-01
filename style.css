@@ -1,12 +1,4 @@
 /* America's Opioid Crisis — final stylesheet
- *
- * Unified KFF-style palette, used across every chart and stat:
- *   --c-navy   primary line   (total drug overdose)
- *   --c-teal   secondary line (all opioids)
- *   --c-orange tertiary line  (non-opioids / heroin)
- *   --c-rust   accent for editorial moments only
- *
- * Stats and pull quotes have no rules above/below — they sit in negative space.
  */
 
 :root {
@@ -22,29 +14,23 @@
   --ink-2: #4a4a4a;
   --ink-3: #888;
 
-  /* === Single chart palette, used everywhere === */
-  --c-navy:   #0a2c4e;  /* primary    */
-  --c-teal:   #3aa48a;  /* secondary  */
-  --c-orange: #c66024;  /* tertiary   */
-
   /* Editorial accent — kicker, stat numbers, hover halos */
-  --c-rust:   #c44536;
-
-  /* Map ramp (sequential, distinct from line palette) */
-  --geo-0: #e9efe6;
-  --geo-1: #c9d9c4;
-  --geo-2: #f3d57a;
-  --geo-3: #e89456;
-  --geo-4: #c95a2e;
-  --geo-5: #7a1a1a;
+  --c-rust: #c44536;
 
   /* Layout */
   --w: 720px;
   --w-wide: 1120px;
 }
 
-* { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
 
 body {
   background: var(--bg);
@@ -57,20 +43,22 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-a { color: inherit; }
+a {
+  color: inherit;
+}
 
 .container {
   max-width: var(--w);
   margin: 0 auto;
   padding: 0 24px;
 }
-.container.chart-header { max-width: var(--w-wide); }
+
+.container.chart-header {
+  max-width: var(--w-wide);
+}
 
 
-/* ============================================================
-   HERO — Single 100vh, image-led layout
-   Order: kicker → image → headline → deck → byline
-   ============================================================ */
+/* -- HERO -- */
 
 .hero-dark {
   position: relative;
@@ -105,8 +93,7 @@ a { color: inherit; }
   animation: hero-fade 600ms ease-out 100ms forwards;
 }
 
-/* === Image — reveals left-to-right via clip-path
-       The heart-line in the photograph appears to "draw itself" across the frame. === */
+/* === Image === */
 .hero-image-wrap {
   width: 100%;
   max-width: 1100px;
@@ -121,8 +108,13 @@ a { color: inherit; }
 }
 
 @keyframes hero-reveal {
-  0%   { clip-path: inset(0 100% 0 0); }
-  100% { clip-path: inset(0 0 0 0); }
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
 }
 
 .hero-img {
@@ -149,20 +141,21 @@ a { color: inherit; }
   animation: hero-rise 800ms ease-out 1500ms forwards;
 }
 
-/* "opioid deaths" — single red phrase, kept together */
+/* "opioid deaths" — single red phrase, kept on one line */
 .hero-emph-red {
   color: #d6403a;
   white-space: nowrap;
 }
 
-/* Second sentence — green, shifts to red as you scroll into the page.
-   The transition is driven by --hero-scroll (0 to 1). */
+/* Second sentence — green, shifts to red as we scroll into the page */
 .hero-emph {
-  color: rgb(
-    calc(142 + var(--hero-scroll, 0) * 72),    /* 142 → 214 (8e → d6) */
-    calc(201 + var(--hero-scroll, 0) * -137),  /* 201 →  64 (c9 → 40) */
-    calc(134 + var(--hero-scroll, 0) * -76)    /* 134 →  58 (86 → 3a) */
-  );
+  color: rgb(calc(142 + var(--hero-scroll, 0) * 72),
+      /* 142 → 214 (8e → d6) */
+      calc(201 + var(--hero-scroll, 0) * -137),
+      /* 201 →  64 (c9 → 40) */
+      calc(134 + var(--hero-scroll, 0) * -76)
+      /* 134 →  58 (86 → 3a) */
+    );
   transition: color 80ms linear;
 }
 
@@ -194,25 +187,43 @@ a { color: inherit; }
   text-decoration-color: rgba(255, 255, 255, 0.25);
   text-underline-offset: 3px;
 }
-.hero-byline a:hover { text-decoration-color: var(--c-rust); }
+
+.hero-byline a:hover {
+  text-decoration-color: var(--c-rust);
+}
 
 @keyframes hero-fade {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes hero-rise {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* === Scroll cue === */
 .hero-scroll-cue {
   position: absolute;
-  bottom: 24px; left: 50%;
+  bottom: 24px;
+  left: 50%;
   transform: translateX(-50%);
-  display: flex; flex-direction: column;
-  align-items: center; gap: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
   font-size: 10px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -224,46 +235,82 @@ a { color: inherit; }
 }
 
 @keyframes scroll-bob {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50%      { transform: translateX(-50%) translateY(6px); }
+
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  50% {
+    transform: translateX(-50%) translateY(6px);
+  }
 }
 
-.hero-scroll-cue.faded { opacity: 0 !important; }
+.hero-scroll-cue.faded {
+  opacity: 0 !important;
+}
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  .hero-kicker, .hero-headline, .hero-deck, .hero-byline, .hero-scroll-cue {
+
+  .hero-kicker,
+  .hero-headline,
+  .hero-deck,
+  .hero-byline,
+  .hero-scroll-cue,
+  .hero-emph-red {
     animation: none !important;
     opacity: 1;
     transform: none;
   }
+
   .hero-image-mask {
     animation: none !important;
     clip-path: none;
   }
-  .hero-img { transform: none; }
+
+  .hero-img {
+    transform: none;
+  }
 }
 
 
-/* ============================================================
-   PROSE
-   ============================================================ */
+/* === PROSE ==== */
 
-.prose { padding: 28px 0; }
-.prose .container { max-width: var(--w); }
+.prose {
+  padding: 24px 0;
+}
+
+.prose .container {
+  max-width: var(--w);
+}
+
+/* When two .prose sections sit next to each other, kill the doubled padding
+   so the paragraph rhythm reads as continuous prose, not "section / gap / section". */
+.prose+.prose {
+  padding-top: 0;
+}
 
 .prose p {
   font-size: 18px;
   line-height: 1.7;
-  margin: 0 0 18px;
+  margin: 0 0 22px;
   color: var(--ink);
 }
-.prose p:last-child { margin-bottom: 0; }
-.prose strong { font-weight: 600; }
-.prose em { font-style: italic; }
 
-/* Inline hyperlinks — dotted underline that becomes a solid red underline on hover.
-   This signals the link without distracting from reading flow. */
+.prose p:last-child {
+  margin-bottom: 0;
+}
+
+.prose strong {
+  font-weight: 600;
+}
+
+.prose em {
+  font-style: italic;
+}
+
+/* Inline hyperlinks */
 .prose a {
   color: var(--ink);
   text-decoration: none;
@@ -281,7 +328,10 @@ a { color: inherit; }
   color: var(--ink);
 }
 
-.lede { padding-top: 64px; padding-bottom: 32px; }
+.lede {
+  padding-top: 64px;
+  padding-bottom: 32px;
+}
 
 .dropcap::first-letter {
   float: left;
@@ -293,20 +343,19 @@ a { color: inherit; }
   letter-spacing: -0.02em;
 }
 
-/* Pull quote — center-aligned, top + bottom rules, with a large opening quotation mark above. */
+/* Pull quote */
 .pullquote {
   border: none;
-  border-top: 1px solid var(--ink);
-  border-bottom: 1px solid var(--ink);
-  margin: 48px 0;
-  padding: 36px 0 28px;
+  margin: 40px 0;
+  padding: 24px 0 18px;
   text-align: center;
   position: relative;
 }
 
-/* Decorative opening quotation mark, sitting above the quote */
+/* Decorative opening quotation mark */
 .pullquote::before {
-  content: "\201C";              /* big curly opening quote */
+  content: "\201C";
+  /* big curly opening quote */
   display: block;
   font-family: Georgia, "Times New Roman", serif;
   font-size: 72px;
@@ -339,9 +388,7 @@ a { color: inherit; }
 }
 
 
-/* ============================================================
-   STAT CALLOUT — no horizontal rules. Just open whitespace.
-   ============================================================ */
+/* ==== STAT CALLOUT ==== */
 
 .stat-callout {
   padding: 48px 0;
@@ -384,8 +431,13 @@ a { color: inherit; }
   margin: 0 0 8px;
 }
 
-.stat-text p:last-child { margin: 0; }
-.stat-text strong { font-weight: 600; }
+.stat-text p:last-child {
+  margin: 0;
+}
+
+.stat-text strong {
+  font-weight: 600;
+}
 
 .stat-text .stat-source {
   font-size: 12px;
@@ -394,9 +446,7 @@ a { color: inherit; }
 }
 
 
-/* ============================================================
-   CHART SECTIONS
-   ============================================================ */
+/* ==== CHART SECTIONS ==== */
 
 .chart-section {
   padding: 56px 0;
@@ -417,8 +467,8 @@ a { color: inherit; }
   color: var(--ink-2);
   line-height: 1.5;
   margin: 0 0 28px;
-  max-width: 760px;
-  text-wrap: balance;        /* even line lengths instead of one long + one orphan word */
+  max-width: 920px;
+  text-wrap: balance;
 }
 
 .chart-wrap {
@@ -432,13 +482,22 @@ a { color: inherit; }
   display: block;
 }
 
-#chart1 { aspect-ratio: 960 / 460; }
-#chart3 { aspect-ratio: 960 / 480; }
-#chart4 { aspect-ratio: 960 / 760; }
-#chart5 { aspect-ratio: 960 / 720; }
+#chart1 {
+  aspect-ratio: 960 / 460;
+}
 
-/* Wider chart section — uses chart-header container (1120px) instead of prose-width 720px.
-   Charts breathe at full width while body prose stays at reading width. */
+#chart3 {
+  aspect-ratio: 960 / 480;
+}
+
+#chart4 {
+  aspect-ratio: 960 / 460;
+}
+
+#chart5 {
+  aspect-ratio: 960 / 720;
+}
+
 .chart-section-wide .container.chart-header {
   max-width: 1120px;
 }
@@ -452,7 +511,7 @@ a { color: inherit; }
   line-height: 1.5;
 }
 
-/* Tiny attribution under each viz. No "Source:" prefix, no border. */
+/* Tiny attribution under each viz. */
 .chart-source-mini {
   font-size: 11px;
   color: var(--ink-3);
@@ -486,17 +545,25 @@ a { color: inherit; }
   transition: background 140ms ease, color 140ms ease;
   letter-spacing: 0.01em;
 }
-.toggle-btn:last-child { border-right: 0; }
+
+.toggle-btn:last-child {
+  border-right: 0;
+}
+
 .toggle-btn:hover {
   color: var(--ink);
   background: #f3efe8;
 }
+
 .toggle-btn.is-active {
-  background: var(--c-navy);
+  background: #8a6f4a;
   color: #fff;
   font-weight: 600;
 }
-.toggle-btn.is-active:hover { background: var(--c-navy); }
+
+.toggle-btn.is-active:hover {
+  background: #8a6f4a;
+}
 
 /* Shared chart axis & grid */
 .chart-section .axis line,
@@ -513,7 +580,10 @@ a { color: inherit; }
   stroke: var(--rule);
   stroke-dasharray: 2 3;
 }
-.chart-section .grid path { display: none; }
+
+.chart-section .grid path {
+  display: none;
+}
 
 .chart-section .line-label {
   font-size: 13px;
@@ -532,10 +602,6 @@ a { color: inherit; }
   fill: none;
 }
 
-/* Chart-specific colors are set via JS attributes (stroke=, fill=) so each chart
-   can pick from the unified palette without polluting CSS with per-chart selectors.
-   See each chart's JS file for the color tokens used. */
-
 /* === Tooltip === */
 .tooltip {
   position: fixed;
@@ -548,67 +614,43 @@ a { color: inherit; }
   line-height: 1.45;
   z-index: 9999;
   min-width: 140px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
   font-family: inherit;
 }
+
 .tooltip .tip-name {
   font-weight: 600;
   font-size: 13px;
   margin-bottom: 4px;
 }
+
 .tooltip .tip-row {
   display: flex;
   justify-content: space-between;
   gap: 16px;
 }
-.tooltip .tip-row span:first-child { color: #bbb; }
-.tooltip .tip-val { color: #fff; font-weight: 500; }
 
-
-/* ============================================================
-   SIDEBAR (xylazine)
-   ============================================================ */
-
-.sidebar-section { padding: 32px 0; }
-
-.sidebar {
-  background: #f3efe8;
-  border-left: 3px solid var(--c-rust);
-  padding: 28px 32px;
+.tooltip .tip-row span:first-child {
+  color: #bbb;
 }
 
-.sidebar-label {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--c-rust);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin: 0 0 8px;
+.tooltip .tip-val {
+  color: #fff;
+  font-weight: 500;
 }
 
-.sidebar-title {
-  font-size: 22px;
-  font-weight: 600;
-  line-height: 1.25;
-  letter-spacing: -0.012em;
-  margin: 0 0 16px;
-  color: var(--ink);
+.tooltip .tip-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.18);
+  margin: 6px 0;
 }
 
-.sidebar p {
-  font-size: 16px;
-  line-height: 1.6;
-  margin: 0 0 12px;
-  color: var(--ink);
+
+/* ==== MAP ==== */
+
+.map-section {
+  padding: 56px 0 0;
 }
-.sidebar p:last-of-type { margin: 0; }
-
-
-/* ============================================================
-   MAP
-   ============================================================ */
-
-.map-section { padding: 56px 0 0; }
 
 .scrolly {
   position: relative;
@@ -618,11 +660,14 @@ a { color: inherit; }
 }
 
 .map-stage {
-  position: sticky; top: 0;
+  position: sticky;
+  top: 0;
   width: 100%;
   height: 100vh;
   background: var(--bg);
-  display: flex; flex-direction: column; justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 #map {
@@ -635,7 +680,8 @@ a { color: inherit; }
 
 .map-meta {
   position: absolute;
-  top: 56px; left: 64px;
+  top: 56px;
+  left: 64px;
   pointer-events: none;
   z-index: 3;
 }
@@ -661,7 +707,11 @@ a { color: inherit; }
   transition: fill 700ms ease;
   cursor: pointer;
 }
-.state:hover { stroke: var(--ink); stroke-width: 1.2px; }
+
+.state:hover {
+  stroke: var(--ink);
+  stroke-width: 1.2px;
+}
 
 .state-bubble {
   fill: rgba(26, 22, 18, 0.55);
@@ -671,14 +721,30 @@ a { color: inherit; }
   pointer-events: none;
 }
 
-.callout-leader { stroke: var(--ink); stroke-width: 0.7px; fill: none; }
-.callout-text { font-size: 13px; font-weight: 500; fill: var(--ink); }
-.callout-rate { font-size: 11px; fill: var(--c-navy); font-weight: 600; }
+.callout-leader {
+  stroke: var(--ink);
+  stroke-width: 0.7px;
+  fill: none;
+}
+
+.callout-text {
+  font-size: 13px;
+  font-weight: 500;
+  fill: var(--ink);
+}
+
+.callout-rate {
+  font-size: 11px;
+  fill: var(--c-navy);
+  font-weight: 600;
+}
 
 .map-legend {
   position: absolute;
-  bottom: 48px; left: 64px;
-  display: flex; flex-direction: column;
+  bottom: 48px;
+  left: 64px;
+  display: flex;
+  flex-direction: column;
   gap: 14px;
   background: rgba(250, 250, 250, 0.92);
   padding: 12px 16px;
@@ -686,20 +752,60 @@ a { color: inherit; }
   z-index: 3;
 }
 
-.legend-row { display: flex; align-items: center; gap: 12px; }
-.legend-label { font-size: 11px; color: var(--ink-2); letter-spacing: 0.04em; min-width: 130px; }
-.legend-bins { display: flex; align-items: flex-end; }
-.legend-bins .bin { width: 28px; height: 12px; position: relative; }
+.legend-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.legend-label {
+  font-size: 11px;
+  color: var(--ink-2);
+  letter-spacing: 0.04em;
+  min-width: 130px;
+}
+
+.legend-bins {
+  display: flex;
+  align-items: flex-end;
+}
+
+.legend-bins .bin {
+  width: 28px;
+  height: 12px;
+  position: relative;
+}
+
 .legend-bins .bin span {
-  position: absolute; bottom: -16px; left: 0; font-size: 10px; color: var(--ink-3);
+  position: absolute;
+  bottom: -16px;
+  left: 0;
+  font-size: 10px;
+  color: var(--ink-3);
 }
-.legend-row + .legend-row { padding-top: 16px; }
-.legend-bubbles { display: flex; align-items: center; gap: 16px; }
+
+.legend-row+.legend-row {
+  padding-top: 16px;
+}
+
+.legend-bubbles {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .legend-bubbles .lb {
-  display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: var(--ink-2);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--ink-2);
 }
+
 .legend-bubbles svg circle {
-  fill: rgba(26, 22, 18, 0.55); stroke: var(--ink); stroke-width: 0.8px;
+  fill: rgba(26, 22, 18, 0.55);
+  stroke: var(--ink);
+  stroke-width: 0.8px;
 }
 
 /* Map tooltip uses same .tooltip class */
@@ -739,16 +845,40 @@ a { color: inherit; }
   border-left-color: var(--c-navy);
 }
 
-.step-year { font-size: 12px; font-weight: 600; color: var(--c-rust); letter-spacing: 0.06em; margin: 0 0 6px; }
-.step-headline { font-size: 20px; font-weight: 600; line-height: 1.25; letter-spacing: -0.01em; margin: 0 0 12px; color: var(--ink); }
-.step-body { font-size: 15px; line-height: 1.55; color: var(--ink-2); margin: 0; }
-.step-body p { margin: 0 0 10px; }
-.step-body p:last-child { margin-bottom: 0; }
+.step-year {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--c-rust);
+  letter-spacing: 0.06em;
+  margin: 0 0 6px;
+}
+
+.step-headline {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin: 0 0 12px;
+  color: var(--ink);
+}
+
+.step-body {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-2);
+  margin: 0;
+}
+
+.step-body p {
+  margin: 0 0 10px;
+}
+
+.step-body p:last-child {
+  margin-bottom: 0;
+}
 
 
-/* ============================================================
-   COLOPHON
-   ============================================================ */
+/* ==== COLOPHON ==== */
 
 .colophon {
   border-top: 1px solid var(--ink);
@@ -765,7 +895,10 @@ a { color: inherit; }
   color: var(--ink);
   margin: 28px 0 8px;
 }
-.colophon h3:first-child { margin-top: 0; }
+
+.colophon h3:first-child {
+  margin-top: 0;
+}
 
 .colophon p {
   font-size: 14px;
@@ -779,41 +912,179 @@ a { color: inherit; }
   color: var(--ink-3);
   margin-top: 28px;
 }
+
 .colophon .byline a {
   color: var(--ink-2);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
+/* Credit */
+.colophon .credits {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 
-/* ============================================================
-   MOBILE
-   ============================================================ */
+.colophon .credits li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  padding: 10px 0;
+  border-top: 1px solid var(--rule);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.colophon .credits li:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+
+.colophon .credit-role {
+  flex: 0 0 240px;
+  color: var(--ink-3);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding-top: 1px;
+}
+
+.colophon .credit-name {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.colophon .credit-name a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--ink-3);
+  text-underline-offset: 2px;
+}
+
+.colophon .credit-name a:hover {
+  text-decoration-color: var(--c-rust);
+  color: var(--c-rust);
+}
+
+
+/* ==== MOBILE ==== */
 
 @media (max-width: 800px) {
-  .hero-dark { height: 180vh; }
-  .hero-headline { font-size: clamp(22px, 6.5vw, 34px); }
-  .hero-deck { font-size: 14px; }
-  .hero-img { max-width: 100%; }
 
-  .lede { padding-top: 40px; }
-  .dropcap::first-letter { font-size: 48px; }
+  /* Hero — content-driven height on mobile, no extra empty space */
+  .hero-dark {
+    height: auto;
+    min-height: 100vh;
+    padding: 48px 0 64px;
+    /* tighter than desktop's clamp(48px, 8vh, 96px) */
+  }
 
-  .stat-line { grid-template-columns: 1fr; gap: 12px; }
-  .stat-big { font-size: 64px; }
+  .hero-frame {
+    padding: 0 20px;
+    gap: 0;
+  }
 
-  .chart-title { font-size: 22px; }
-  .pullquote p { font-size: 20px; }
+  .hero-kicker {
+    margin-bottom: 20px;
+  }
 
-  .scrolly { padding: 0 16px; }
-  #map { margin: 0 auto; max-width: 100%; }
-  .map-year { font-size: 48px; }
-  .map-meta { top: 24px; left: 24px; }
-  .map-legend { bottom: 16px; left: 16px; right: 16px; padding: 10px 12px; }
-  .legend-label { min-width: 90px; font-size: 10px; }
-  .legend-bins .bin { width: 22px; height: 10px; }
-  .step { justify-content: center; padding: 0 16px; min-height: 70vh; }
-  .step-card { width: 100%; max-width: 100%; }
+  .hero-headline {
+    font-size: clamp(22px, 6.5vw, 34px);
+    line-height: 1.2;
+    margin-bottom: 18px;
+  }
 
-  .sidebar { padding: 22px 22px; }
+  .hero-image-wrap {
+    margin: 0 0 22px;
+  }
+
+  .hero-deck {
+    font-size: 14px;
+    margin-bottom: 18px;
+    max-width: 100%;
+  }
+
+  .hero-img {
+    max-width: 100%;
+  }
+
+  .hero-scroll-cue {
+    bottom: 14px;
+  }
+
+  .lede {
+    padding-top: 40px;
+  }
+
+  .dropcap::first-letter {
+    font-size: 48px;
+  }
+
+  .stat-line {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .stat-big {
+    font-size: 64px;
+  }
+
+  .chart-title {
+    font-size: 22px;
+  }
+
+  .pullquote p {
+    font-size: 20px;
+  }
+
+  .scrolly {
+    padding: 0 16px;
+  }
+
+  #map {
+    margin: 0 auto;
+    max-width: 100%;
+  }
+
+  .map-year {
+    font-size: 48px;
+  }
+
+  .map-meta {
+    top: 24px;
+    left: 24px;
+  }
+
+  .map-legend {
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    padding: 10px 12px;
+  }
+
+  .legend-label {
+    min-width: 90px;
+    font-size: 10px;
+  }
+
+  .legend-bins .bin {
+    width: 22px;
+    height: 10px;
+  }
+
+  .step {
+    justify-content: center;
+    padding: 0 16px;
+    min-height: 70vh;
+  }
+
+  .step-card {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .sidebar {
+    padding: 22px 22px;
+  }
 }

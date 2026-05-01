@@ -1,8 +1,4 @@
 // Chart 1 — National trend
-// Two clean lines, 1999–2024:
-//   Total drug overdose deaths (navy)
-//   All opioid-involved deaths (oxblood)
-// No annotations. Just the data, end-of-line labels, and a hover tooltip.
 
 (function () {
   const W = 960, H = 460;
@@ -10,7 +6,7 @@
   const innerW = W - M.left - M.right;
   const innerH = H - M.top - M.bottom;
 
-  const NAVY = "#0a2c4e";
+  const DRUG = "#8a6f4a";
   const OPIOID = "#a8312a";
 
   fetch("data/01_national_trend.csv")
@@ -70,7 +66,7 @@
     g.append("path")
       .datum(data)
       .attr("fill", "none")
-      .attr("stroke", NAVY)
+      .attr("stroke", DRUG)
       .attr("stroke-width", 3)
       .attr("stroke-linejoin", "round")
       .attr("stroke-linecap", "round")
@@ -92,7 +88,7 @@
       .attr("x", x(last.year) + 12)
       .attr("y", y(last.total))
       .attr("dy", "0.32em")
-      .attr("fill", NAVY)
+      .attr("fill", DRUG)
       .attr("font-size", 14)
       .attr("font-weight", 600)
       .text("Total drug");
@@ -113,7 +109,17 @@
       .attr("fill", OPIOID)
       .attr("font-size", 14)
       .attr("font-weight", 600)
-      .text("All opioids");
+      .text("Opioid-involved");
+
+    g.append("text")
+      .attr("x", x(last.year) + 12)
+      .attr("y", y(last.opioid) + 16)
+      .attr("dy", "0.32em")
+      .attr("fill", "#888")
+      .attr("font-size", 12)
+      .attr("font-weight", 500)
+      .text("overdose deaths");
+
 
     // Hover layer
     const focus = g.append("g").style("display", "none");
@@ -121,7 +127,7 @@
       .attr("y1", 0).attr("y2", innerH)
       .attr("stroke", "#888").attr("stroke-width", 1);
     const dotTotal = focus.append("circle")
-      .attr("r", 5).attr("fill", NAVY)
+      .attr("r", 5).attr("fill", DRUG)
       .attr("stroke", "#fff").attr("stroke-width", 2);
     const dotOpioid = focus.append("circle")
       .attr("r", 5).attr("fill", OPIOID)

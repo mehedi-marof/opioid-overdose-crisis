@@ -1,16 +1,11 @@
 // Chart 5 — Demographics in three angles
-//   Race & ethnicity  (5 groups)
-//   Age              (4 groups)
-//   Sex              (2 groups)
-// Same dumbbell treatment for each: 2019 (gray dot) → 2024 (oxblood dot).
-// Section headers separate the groups.
 
 (function () {
   const W = 960, H = 720;
   const M = { top: 60, right: 60, bottom: 50, left: 240 };
   const innerW = W - M.left - M.right;
 
-  const COLOR_2019 = "#9a958d";   // stone gray
+  const COLOR_2019 = "#8a6f4a";   // muted brown (cool baseline)
   const COLOR_2024 = "#a8312a";   // oxblood
   const RULE = "#cfcfcc";
 
@@ -20,27 +15,27 @@
     {
       heading: "Race & ethnicity",
       rows: [
-        { group: "American Indian / Alaska Native", short: "AIAN",     r19: 17.7, r24: 35.5 },
-        { group: "Black",                           short: "Black",    r19: 16.4, r24: 22.8 },
-        { group: "White",                           short: "White",    r19: 18.9, r24: 17.5 },
-        { group: "Hispanic",                        short: "Hispanic", r19:  9.0, r24: 11.8 },
-        { group: "Asian / Pacific Islander",        short: "Asian",    r19:  1.5, r24:  2.4 }
+        { group: "American Indian / Alaska Native", short: "AIAN", r19: 17.7, r24: 35.5 },
+        { group: "Black", short: "Black", r19: 16.4, r24: 22.8 },
+        { group: "White", short: "White", r19: 18.9, r24: 17.5 },
+        { group: "Hispanic", short: "Hispanic", r19: 9.0, r24: 11.8 },
+        { group: "Asian / Pacific Islander", short: "Asian", r19: 1.5, r24: 2.4 }
       ]
     },
     {
       heading: "Age",
       rows: [
-        { group: "Ages 26 to 44",  short: "26–44",  r19: 28.2, r24: 29.1 },
-        { group: "Ages 45 to 64",  short: "45–64",  r19: 21.8, r24: 24.9 },
-        { group: "Ages 18 to 25",  short: "18–25",  r19: 12.8, r24:  9.3 },
-        { group: "Ages 65+",       short: "65+",    r19:  3.8, r24:  7.0 }
+        { group: "Ages 26 to 44", short: "26–44", r19: 28.2, r24: 29.1 },
+        { group: "Ages 45 to 64", short: "45–64", r19: 21.8, r24: 24.9 },
+        { group: "Ages 18 to 25", short: "18–25", r19: 12.8, r24: 9.3 },
+        { group: "Ages 65+", short: "65+", r19: 3.8, r24: 7.0 }
       ]
     },
     {
       heading: "Sex",
       rows: [
-        { group: "Male",   short: "Male",   r19: 21.0, r24: 22.5 },
-        { group: "Female", short: "Female", r19:  8.6, r24:  9.5 }
+        { group: "Male", short: "Male", r19: 21.0, r24: 22.5 },
+        { group: "Female", short: "Female", r19: 8.6, r24: 9.5 }
       ]
     }
   ];
