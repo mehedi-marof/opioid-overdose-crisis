@@ -1,0 +1,743 @@
+/* America's Opioid Crisis — final stylesheet
+ *
+ * Unified KFF-style palette, used across every chart and stat:
+ *   --c-navy   primary line   (total drug overdose)
+ *   --c-teal   secondary line (all opioids)
+ *   --c-orange tertiary line  (non-opioids / heroin)
+ *   --c-rust   accent for editorial moments only
+ *
+ * Stats and pull quotes have no rules above/below — they sit in negative space.
+ */
+
+:root {
+  /* Surfaces */
+  --bg: #fafafa;
+  --bg-dark: #0e0e0e;
+  --surface: #ffffff;
+  --rule: #e8e8e6;
+  --rule-strong: #cfcfcc;
+
+  /* Ink */
+  --ink: #1a1612;
+  --ink-2: #4a4a4a;
+  --ink-3: #888;
+
+  /* === Single chart palette, used everywhere === */
+  --c-navy:   #0a2c4e;  /* primary    */
+  --c-teal:   #3aa48a;  /* secondary  */
+  --c-orange: #c66024;  /* tertiary   */
+
+  /* Editorial accent — kicker, stat numbers, hover halos */
+  --c-rust:   #c44536;
+
+  /* Map ramp (sequential, distinct from line palette) */
+  --geo-0: #e9efe6;
+  --geo-1: #c9d9c4;
+  --geo-2: #f3d57a;
+  --geo-3: #e89456;
+  --geo-4: #c95a2e;
+  --geo-5: #7a1a1a;
+
+  /* Layout */
+  --w: 720px;
+  --w-wide: 1120px;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Inter", -apple-system, system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a { color: inherit; }
+
+.container {
+  max-width: var(--w);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.container.chart-header { max-width: var(--w-wide); }
+
+
+/* ============================================================
+   HERO
+   ============================================================ */
+
+.hero-dark {
+  position: relative;
+  background: #000000;        /* matches the image's pure-black background — no seam */
+  color: #f4f4f4;
+  height: 200vh;
+  overflow: hidden;
+}
+
+/* Centered text column. No image overlap. */
+.hero-content {
+  position: sticky; top: 0;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 clamp(24px, 5vw, 80px);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Image banner — sits at the BOTTOM of the hero viewport, full width. Headline floats above it. */
+.hero-banner {
+  position: sticky;
+  top: 0;
+  margin-top: -100vh;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 200ms ease;
+}
+
+.hero-img {
+  display: block;
+  width: 100%;
+  max-width: 1600px;
+  height: auto;
+  opacity: 0.85;
+}
+
+.hero-kicker {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--c-rust);
+  margin: 0 0 32px;
+  pointer-events: auto;
+}
+
+.hero-headline {
+  font-size: clamp(28px, 4.6vw, 60px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  margin: 0 0 28px;
+  max-width: 1100px;
+  color: #ffffff;
+  pointer-events: auto;
+}
+
+/* Each sentence on its own line so the two clauses don't break across the same line awkwardly. */
+.hero-line {
+  display: block;
+  white-space: normal;
+}
+
+.hero-line + .hero-line {
+  margin-top: 8px;
+}
+
+/* The word "opioid" — red */
+.hero-emph-red {
+  color: #d6403a;
+}
+
+/* The full second sentence — green, shifts to red on scroll */
+.hero-emph {
+  color: #8ec986;
+  transition: color 600ms ease;
+}
+.hero-emph.shifted { color: #d6403a; }
+
+.hero-deck {
+  font-size: clamp(14px, 1.3vw, 17px);
+  line-height: 1.55;
+  color: #b8b8b6;
+  margin: 0 0 28px;
+  max-width: 600px;
+  font-weight: 400;
+  pointer-events: auto;
+}
+
+.hero-byline {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: #888;
+  margin: 0;
+  pointer-events: auto;
+}
+
+.hero-byline a {
+  color: #c8c8c8;
+  text-decoration: underline;
+  text-decoration-color: rgba(255,255,255,0.25);
+  text-underline-offset: 3px;
+}
+.hero-byline a:hover { text-decoration-color: var(--c-rust); }
+
+.hero-scroll-cue {
+  position: fixed;
+  bottom: 28px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column;
+  align-items: center; gap: 8px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #888;
+  z-index: 3;
+  pointer-events: none;
+  animation: scroll-bob 2.2s ease-in-out infinite;
+  transition: opacity 200ms ease;
+}
+
+@keyframes scroll-bob {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(6px); }
+}
+
+.hero-scroll-cue.faded { opacity: 0; }
+
+
+/* ============================================================
+   PROSE
+   ============================================================ */
+
+.prose { padding: 28px 0; }
+.prose .container { max-width: var(--w); }
+
+.prose p {
+  font-size: 18px;
+  line-height: 1.7;
+  margin: 0 0 18px;
+  color: var(--ink);
+}
+.prose p:last-child { margin-bottom: 0; }
+.prose strong { font-weight: 600; }
+.prose em { font-style: italic; }
+
+/* Inline hyperlinks — dotted underline that becomes a solid red underline on hover.
+   This signals the link without distracting from reading flow. */
+.prose a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--ink-3);
+  padding-bottom: 1px;
+  transition: color 160ms ease, border-bottom-color 160ms ease;
+}
+
+.prose a:hover {
+  color: var(--c-rust);
+  border-bottom: 1.5px solid var(--c-rust);
+}
+
+.prose a:visited {
+  color: var(--ink);
+}
+
+.lede { padding-top: 64px; padding-bottom: 32px; }
+
+.dropcap::first-letter {
+  float: left;
+  font-size: 64px;
+  line-height: 0.95;
+  font-weight: 700;
+  margin: 4px 12px 0 0;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+
+/* Pull quote — center-aligned, top + bottom rules, with a large opening quotation mark above. */
+.pullquote {
+  border: none;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  margin: 48px 0;
+  padding: 36px 0 28px;
+  text-align: center;
+  position: relative;
+}
+
+/* Decorative opening quotation mark, sitting above the quote */
+.pullquote::before {
+  content: "\201C";              /* big curly opening quote */
+  display: block;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 72px;
+  line-height: 1;
+  color: var(--c-rust);
+  margin: 0 0 8px;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+}
+
+.pullquote p {
+  font-size: clamp(22px, 2.4vw, 28px);
+  font-weight: 500;
+  line-height: 1.34;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+  border: none;
+  padding: 0;
+  margin: 0 auto 16px;
+  max-width: 640px;
+}
+
+.pullquote cite {
+  font-style: normal;
+  font-size: 13px;
+  color: var(--ink-3);
+  letter-spacing: 0.02em;
+  padding-left: 0;
+  display: block;
+}
+
+
+/* ============================================================
+   STAT CALLOUT — no horizontal rules. Just open whitespace.
+   ============================================================ */
+
+.stat-callout {
+  padding: 48px 0;
+}
+
+.stat-callout .container {
+  max-width: var(--w);
+}
+
+.stat-line {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 36px;
+  align-items: baseline;
+  /* No borders. Whitespace alone holds the stat in the page rhythm. */
+  padding: 0;
+}
+
+.stat-big {
+  font-size: clamp(72px, 9vw, 120px);
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  color: var(--c-rust);
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
+.stat-big span {
+  font-size: 0.45em;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-left: 2px;
+  color: var(--c-rust);
+}
+
+.stat-text p {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+
+.stat-text p:last-child { margin: 0; }
+.stat-text strong { font-weight: 600; }
+
+.stat-text .stat-source {
+  font-size: 12px;
+  color: var(--ink-3);
+  margin-top: 8px;
+}
+
+
+/* ============================================================
+   CHART SECTIONS
+   ============================================================ */
+
+.chart-section {
+  padding: 56px 0;
+}
+
+.chart-title {
+  font-size: clamp(22px, 2.5vw, 30px);
+  font-weight: 700;
+  line-height: 1.22;
+  letter-spacing: -0.018em;
+  margin: 0 0 10px;
+  color: var(--ink);
+}
+
+.chart-deck {
+  font-size: 16px;
+  color: var(--ink-2);
+  line-height: 1.5;
+  margin: 0 0 28px;
+  max-width: 640px;
+}
+
+.chart-wrap {
+  width: 100%;
+  margin: 0 0 24px;
+}
+
+.chart-wrap svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+#chart1 { aspect-ratio: 960 / 460; }
+#chart3 { aspect-ratio: 960 / 480; }
+#chart4 { aspect-ratio: 960 / 460; }
+#chart5 { aspect-ratio: 960 / 720; }
+
+/* Wider chart section — uses chart-header container (1120px) instead of prose-width 720px.
+   Charts breathe at full width while body prose stays at reading width. */
+.chart-section-wide .container.chart-header {
+  max-width: 1120px;
+}
+
+.chart-source {
+  font-size: 12px;
+  color: var(--ink-3);
+  border-top: 1px solid var(--rule);
+  padding-top: 14px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Tiny attribution under each viz. No "Source:" prefix, no border. */
+.chart-source-mini {
+  font-size: 11px;
+  color: var(--ink-3);
+  margin: 8px 0 0;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+}
+
+/* Shared chart axis & grid */
+.chart-section .axis line,
+.chart-section .axis path {
+  stroke: var(--rule);
+}
+
+.chart-section .axis text {
+  font-size: 12px;
+  fill: var(--ink-3);
+}
+
+.chart-section .grid line {
+  stroke: var(--rule);
+  stroke-dasharray: 2 3;
+}
+.chart-section .grid path { display: none; }
+
+.chart-section .line-label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.chart-section .annotation {
+  font-size: 11px;
+  fill: var(--ink-2);
+}
+
+.chart-section .annotation-line {
+  stroke: var(--ink-3);
+  stroke-width: 0.8;
+  stroke-dasharray: 2 2;
+  fill: none;
+}
+
+/* Chart-specific colors are set via JS attributes (stroke=, fill=) so each chart
+   can pick from the unified palette without polluting CSS with per-chart selectors.
+   See each chart's JS file for the color tokens used. */
+
+/* === Tooltip === */
+.tooltip {
+  position: fixed;
+  display: none;
+  pointer-events: none;
+  background: var(--ink);
+  color: #fff;
+  padding: 9px 12px;
+  font-size: 12px;
+  line-height: 1.45;
+  z-index: 9999;
+  min-width: 140px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+  font-family: inherit;
+}
+.tooltip .tip-name {
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+.tooltip .tip-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+.tooltip .tip-row span:first-child { color: #bbb; }
+.tooltip .tip-val { color: #fff; font-weight: 500; }
+
+
+/* ============================================================
+   SIDEBAR (xylazine)
+   ============================================================ */
+
+.sidebar-section { padding: 32px 0; }
+
+.sidebar {
+  background: #f3efe8;
+  border-left: 3px solid var(--c-rust);
+  padding: 28px 32px;
+}
+
+.sidebar-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--c-rust);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0 0 8px;
+}
+
+.sidebar-title {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.012em;
+  margin: 0 0 16px;
+  color: var(--ink);
+}
+
+.sidebar p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0 0 12px;
+  color: var(--ink);
+}
+.sidebar p:last-of-type { margin: 0; }
+
+
+/* ============================================================
+   MAP
+   ============================================================ */
+
+.map-section { padding: 56px 0 0; }
+
+.scrolly {
+  position: relative;
+  margin: 32px auto 0;
+  max-width: 1280px;
+  padding: 0 32px;
+}
+
+.map-stage {
+  position: sticky; top: 0;
+  width: 100%;
+  height: 100vh;
+  background: var(--bg);
+  display: flex; flex-direction: column; justify-content: center;
+}
+
+#map {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 0 0 32px;
+  max-height: 70vh;
+  height: auto;
+}
+
+.map-meta {
+  position: absolute;
+  top: 56px; left: 64px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.map-year {
+  font-size: 72px;
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+.map-caption {
+  font-size: 12px;
+  color: var(--ink-3);
+  letter-spacing: 0.04em;
+  margin-top: 4px;
+}
+
+.state {
+  stroke: var(--bg);
+  stroke-width: 0.6px;
+  transition: fill 700ms ease;
+  cursor: pointer;
+}
+.state:hover { stroke: var(--ink); stroke-width: 1.2px; }
+
+.state-bubble {
+  fill: rgba(26, 22, 18, 0.55);
+  stroke: var(--ink);
+  stroke-width: 0.8px;
+  transition: r 700ms ease, opacity 700ms ease;
+  pointer-events: none;
+}
+
+.callout-leader { stroke: var(--ink); stroke-width: 0.7px; fill: none; }
+.callout-text { font-size: 13px; font-weight: 500; fill: var(--ink); }
+.callout-rate { font-size: 11px; fill: var(--c-navy); font-weight: 600; }
+
+.map-legend {
+  position: absolute;
+  bottom: 48px; left: 64px;
+  display: flex; flex-direction: column;
+  gap: 14px;
+  background: rgba(250, 250, 250, 0.92);
+  padding: 12px 16px;
+  border: 1px solid var(--rule);
+  z-index: 3;
+}
+
+.legend-row { display: flex; align-items: center; gap: 12px; }
+.legend-label { font-size: 11px; color: var(--ink-2); letter-spacing: 0.04em; min-width: 130px; }
+.legend-bins { display: flex; align-items: flex-end; }
+.legend-bins .bin { width: 28px; height: 12px; position: relative; }
+.legend-bins .bin span {
+  position: absolute; bottom: -16px; left: 0; font-size: 10px; color: var(--ink-3);
+}
+.legend-row + .legend-row { padding-top: 16px; }
+.legend-bubbles { display: flex; align-items: center; gap: 16px; }
+.legend-bubbles .lb {
+  display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: var(--ink-2);
+}
+.legend-bubbles svg circle {
+  fill: rgba(26, 22, 18, 0.55); stroke: var(--ink); stroke-width: 0.8px;
+}
+
+/* Map tooltip uses same .tooltip class */
+
+.steps {
+  position: relative;
+  margin-top: -100vh;
+  padding: 30vh 0 30vh;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.step {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 32px 0 0;
+  margin-bottom: 30vh;
+  pointer-events: none;
+}
+
+.step-card {
+  width: 340px;
+  max-width: 92%;
+  background: #ffffff;
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--ink-3);
+  padding: 22px 24px;
+  opacity: 0.6;
+  transition: opacity 400ms ease, border-left-color 400ms ease;
+  pointer-events: auto;
+}
+
+.step.is-active .step-card {
+  opacity: 1;
+  border-left-color: var(--c-navy);
+}
+
+.step-year { font-size: 12px; font-weight: 600; color: var(--c-rust); letter-spacing: 0.06em; margin: 0 0 6px; }
+.step-headline { font-size: 20px; font-weight: 600; line-height: 1.25; letter-spacing: -0.01em; margin: 0 0 12px; color: var(--ink); }
+.step-body { font-size: 15px; line-height: 1.55; color: var(--ink-2); margin: 0; }
+.step-body p { margin: 0 0 10px; }
+.step-body p:last-child { margin-bottom: 0; }
+
+
+/* ============================================================
+   COLOPHON
+   ============================================================ */
+
+.colophon {
+  border-top: 1px solid var(--ink);
+  padding: 56px 0 80px;
+  margin-top: 56px;
+  background: var(--bg);
+}
+
+.colophon h3 {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin: 28px 0 8px;
+}
+.colophon h3:first-child { margin-top: 0; }
+
+.colophon p {
+  font-size: 14px;
+  color: var(--ink-2);
+  line-height: 1.6;
+  margin: 0 0 14px;
+}
+
+.colophon .byline {
+  font-size: 12px;
+  color: var(--ink-3);
+  margin-top: 28px;
+}
+.colophon .byline a {
+  color: var(--ink-2);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 800px) {
+  .hero-dark { height: 180vh; }
+  .hero-headline { font-size: clamp(22px, 6.5vw, 34px); }
+  .hero-deck { font-size: 14px; }
+  .hero-img { max-width: 100%; }
+
+  .lede { padding-top: 40px; }
+  .dropcap::first-letter { font-size: 48px; }
+
+  .stat-line { grid-template-columns: 1fr; gap: 12px; }
+  .stat-big { font-size: 64px; }
+
+  .chart-title { font-size: 22px; }
+  .pullquote p { font-size: 20px; }
+
+  .scrolly { padding: 0 16px; }
+  #map { margin: 0 auto; max-width: 100%; }
+  .map-year { font-size: 48px; }
+  .map-meta { top: 24px; left: 24px; }
+  .map-legend { bottom: 16px; left: 16px; right: 16px; padding: 10px 12px; }
+  .legend-label { min-width: 90px; font-size: 10px; }
+  .legend-bins .bin { width: 22px; height: 10px; }
+  .step { justify-content: center; padding: 0 16px; min-height: 70vh; }
+  .step-card { width: 100%; max-width: 100%; }
+
+  .sidebar { padding: 22px 22px; }
+}
