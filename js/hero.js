@@ -1,45 +1,31 @@
-// Hero scroll behavior.
+// Hero scroll behavior
 //
-// As the user scrolls down past the hero:
-//   - The banner image (pill bottle → poppy) fades from 0.85 → 0
-//   - The green emphasis on the headline shifts to red
-//   - The "Scroll to read" cue fades
+// Sets a single CSS custom property `--hero-scroll` (0 to 1) based on
+// how far the user has scrolled into the hero. The CSS uses this value
+// to drive:
+//   - color of the green "fell faster than ever" → red
+//   - subtle parallax lift on the image
+//
+// All entrance animations are CSS-driven on load. Scroll only progresses
+// once the user actually scrolls.
 
 (function () {
-  const heroSection = document.querySelector(".hero-dark");
-  const heroBanner = document.getElementById("hero-banner");
-  const scrollCue = document.querySelector(".hero-scroll-cue");
-  const heroEmph = document.querySelector(".hero-emph");
-
-  if (!heroSection) return;
+  const hero = document.getElementById("hero");
+  const cue  = document.querySelector(".hero-scroll-cue");
+  if (!hero) return;
 
   function update() {
-    const rect = heroSection.getBoundingClientRect();
-    const heroHeight = heroSection.offsetHeight;
-    const scrolled = -rect.top;
+    const heroH = hero.offsetHeight;
+    const scrolled = window.scrollY;
 
-    // Banner image fades over the first half of the hero scroll
-    if (heroBanner) {
-      const fadeProgress = Math.max(0, Math.min(1, scrolled / (heroHeight * 0.5)));
-      heroBanner.style.opacity = 1 - fadeProgress;
-    }
+    // Scroll progress within the hero, 0 to 1
+    const progress = Math.max(0, Math.min(1, scrolled / heroH));
+    hero.style.setProperty("--hero-scroll", progress.toFixed(3));
 
-    // Color shift triggers a third of the way through the hero
-    if (heroEmph) {
-      if (scrolled > heroHeight * 0.33) {
-        heroEmph.classList.add("shifted");
-      } else {
-        heroEmph.classList.remove("shifted");
-      }
-    }
-
-    // Scroll cue fades after a tiny scroll
-    if (scrollCue) {
-      if (scrolled > 80) {
-        scrollCue.classList.add("faded");
-      } else {
-        scrollCue.classList.remove("faded");
-      }
+    // Fade the cue once the user has clearly engaged with scroll
+    if (cue) {
+      if (scrolled > 60) cue.classList.add("faded");
+      else cue.classList.remove("faded");
     }
   }
 

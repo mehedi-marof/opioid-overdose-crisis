@@ -10,9 +10,6 @@ const steps = [
     headline: "Before the wave.",
     body: [
       "No state reports a rate above 11 per 100,000. Nationwide, fewer than 8,100 people die from opioid overdoses. The crisis is still local — concentrated in a handful of Western and Appalachian states."
-    ],
-    highlights: [
-      { state: "NM", label: "New Mexico", note: "10/100k" }
     ]
   },
   {
@@ -20,9 +17,6 @@ const steps = [
     headline: "Appalachia ignites first.",
     body: [
       "West Virginia crosses 14 per 100,000, the highest rate in the country. Prescription opioids — OxyContin, Vicodin, oxycodone — are widely dispensed. Deaths follow the pills."
-    ],
-    highlights: [
-      { state: "WV", label: "West Virginia", note: "14/100k" }
     ]
   },
   {
@@ -30,9 +24,6 @@ const steps = [
     headline: "The pills give way to heroin.",
     body: [
       "Reformulations of OxyContin and pill-mill crackdowns close off the legal supply. Many people who became dependent on prescription opioids move to heroin, which is cheaper and more available."
-    ],
-    highlights: [
-      { state: "WV", label: "West Virginia", note: "29/100k" }
     ]
   },
   {
@@ -40,9 +31,6 @@ const steps = [
     headline: "Fentanyl enters the supply.",
     body: [
       "Illicitly manufactured fentanyl appears in the heroin supply, especially in the Northeast. New Hampshire's rate jumps to 31 per 100,000 — the steepest single-year rise in any state to that point."
-    ],
-    highlights: [
-      { state: "NH", label: "New Hampshire", note: "31/100k" }
     ]
   },
   {
@@ -50,9 +38,6 @@ const steps = [
     headline: "The pre-pandemic baseline.",
     body: [
       "Sixteen states are above 20 per 100,000. Six are above 30. Delaware leads at 43, narrowly ahead of West Virginia. This is the year the country will spend the next five trying to return to."
-    ],
-    highlights: [
-      { state: "DE", label: "Delaware", note: "43/100k" }
     ]
   },
   {
@@ -60,9 +45,6 @@ const steps = [
     headline: "The peak.",
     body: [
       "More than 81,800 Americans die of an opioid overdose — the highest figure ever recorded. Twenty states report rates above 30 per 100,000. West Virginia reaches 70."
-    ],
-    highlights: [
-      { state: "WV", label: "West Virginia", note: "70/100k" }
     ]
   },
   {
@@ -70,9 +52,6 @@ const steps = [
     headline: "The first signs of decline.",
     body: [
       "Opioid deaths begin to fall — about 3 percent nationally. Several Eastern states post double-digit declines. The reversal does not yet reach the West, where Alaska, Oregon, and Washington still rise."
-    ],
-    highlights: [
-      { state: "AK", label: "Alaska", note: "30/100k" }
     ]
   },
   {
@@ -80,10 +59,6 @@ const steps = [
     headline: "The decline becomes a drop.",
     body: [
       "The national total falls to 54,045 — a 32 percent decline in opioid deaths in a single year. West Virginia's rate drops from 70 to 38. But Alaska, at 37 per 100,000, has barely moved."
-    ],
-    highlights: [
-      { state: "AK", label: "Alaska", note: "37/100k" },
-      { state: "WV", label: "West Virginia", note: "38/100k" }
     ]
   }
 ];
@@ -260,11 +235,46 @@ async function buildMap() {
     // Redraw callouts.
     calloutGroup.selectAll("*").remove();
 
-    step.highlights.forEach((h, i) => {
+    // ---- DATA-DRIVEN ANNOTATIONS ----
+    // For each year, compute two notable states from the data itself:
+    //   1. The state with the highest rate per 100,000 that year
+    //   2. The state with the highest total deaths that year
+    // If the same state holds both, one combined annotation; otherwise two.
+    const yearRows = rows.filter(r => r.year === year && r.rate != null && r.deaths != null);
+    if (yearRows.length === 0) return;
+
+    const topByRate   = yearRows.reduce((a, b) => (a.rate   >= b.rate   ? a : b));
+    const topByDeaths = yearRows.reduce((a, b) => (a.deaths >= b.deaths ? a : b));
+
+    const annotations = [];
+    if (topByRate.state === topByDeaths.state) {
+      // Same state holds both records — one callout, two stat lines.
+      annotations.push({
+        state: topByRate.state,
+        name:  topByRate.name,
+        lines: [
+          `Highest rate · ${topByRate.rate}/100k`,
+          `Highest deaths · ${topByDeaths.deaths.toLocaleString()}`
+        ]
+      });
+    } else {
+      annotations.push({
+        state: topByRate.state,
+        name:  topByRate.name,
+        lines: [`Highest rate · ${topByRate.rate}/100k`]
+      });
+      annotations.push({
+        state: topByDeaths.state,
+        name:  topByDeaths.name,
+        lines: [`Highest deaths · ${topByDeaths.deaths.toLocaleString()}`]
+      });
+    }
+
+    annotations.forEach((h, i) => {
       const c = centroids.get(h.state);
       if (!c) return;
 
-      // Place the label up and to the right or left of the state, alternating.
+      // Place the label up and to the right or left, alternating when there are two.
       const offsetX = (i === 1) ? 90 : -90;
       const offsetY = (i === 1) ? -50 : -70;
       const labelX = c[0] + offsetX;
@@ -280,17 +290,21 @@ async function buildMap() {
         .attr("cx", c[0]).attr("cy", c[1]).attr("r", 3)
         .attr("fill", "#7a1a1a");
 
+      // State name (bold)
       g.append("text")
         .attr("class", "callout-text")
         .attr("x", labelX).attr("y", labelY)
         .attr("text-anchor", offsetX > 0 ? "start" : "end")
-        .text(h.label);
+        .text(h.name);
 
-      g.append("text")
-        .attr("class", "callout-rate")
-        .attr("x", labelX).attr("y", labelY + 14)
-        .attr("text-anchor", offsetX > 0 ? "start" : "end")
-        .text(h.note);
+      // Stat lines (one or two, stacked below)
+      h.lines.forEach((line, j) => {
+        g.append("text")
+          .attr("class", "callout-rate")
+          .attr("x", labelX).attr("y", labelY + 14 + j * 13)
+          .attr("text-anchor", offsetX > 0 ? "start" : "end")
+          .text(line);
+      });
 
       g.transition().duration(450).delay(150).style("opacity", 1);
     });

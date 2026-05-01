@@ -68,144 +68,181 @@ a { color: inherit; }
 
 
 /* ============================================================
-   HERO
+   HERO — Single 100vh, image-led layout
+   Order: kicker → image → headline → deck → byline
    ============================================================ */
 
 .hero-dark {
   position: relative;
-  background: #000000;        /* matches the image's pure-black background — no seam */
+  background: #000000;
   color: #f4f4f4;
-  height: 200vh;
-  overflow: hidden;
-}
-
-/* Centered text column. No image overlap. */
-.hero-content {
-  position: sticky; top: 0;
   min-height: 100vh;
-  display: flex; flex-direction: column;
+  overflow: hidden;
+  display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  padding: 0 clamp(24px, 5vw, 80px);
-  z-index: 2;
-  pointer-events: none;
+  padding: clamp(48px, 8vh, 96px) 0;
 }
 
-/* Image banner — sits at the BOTTOM of the hero viewport, full width. Headline floats above it. */
-.hero-banner {
-  position: sticky;
-  top: 0;
-  margin-top: -100vh;
-  width: 100%;
-  height: 100vh;
+.hero-frame {
+  width: min(100%, 1280px);
+  padding: 0 clamp(24px, 5vw, 80px);
   display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  pointer-events: none;
-  z-index: 1;
-  transition: opacity 200ms ease;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* === Kicker (appears first, fastest) === */
+.hero-kicker {
+  font-size: clamp(11px, 1vw, 13px);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--c-rust);
+  margin: 0 0 32px;
+  opacity: 0;
+  animation: hero-fade 600ms ease-out 100ms forwards;
+}
+
+/* === Image — reveals left-to-right via clip-path
+       The heart-line in the photograph appears to "draw itself" across the frame. === */
+.hero-image-wrap {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 0 36px;
+}
+
+.hero-image-mask {
+  /* The clip-path animates from a 0-width inset on the right
+     to a fully open frame, revealing the image left-to-right. */
+  clip-path: inset(0 100% 0 0);
+  animation: hero-reveal 1800ms cubic-bezier(0.4, 0, 0.2, 1) 300ms forwards;
+}
+
+@keyframes hero-reveal {
+  0%   { clip-path: inset(0 100% 0 0); }
+  100% { clip-path: inset(0 0 0 0); }
 }
 
 .hero-img {
   display: block;
   width: 100%;
-  max-width: 1600px;
   height: auto;
-  opacity: 0.85;
+  opacity: 0.95;
+  /* Subtle parallax — the image lifts very slightly with scroll progress.
+     The --hero-scroll variable is set by hero.js (0 to 1) as you scroll past. */
+  transform: translateY(calc(var(--hero-scroll, 0) * -20px));
+  transition: transform 60ms linear;
 }
 
-.hero-kicker {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--c-rust);
-  margin: 0 0 32px;
-  pointer-events: auto;
-}
-
+/* === Headline === */
 .hero-headline {
-  font-size: clamp(28px, 4.6vw, 60px);
+  font-size: clamp(26px, 3.6vw, 48px);
   font-weight: 700;
-  line-height: 1.08;
+  line-height: 1.14;
   letter-spacing: -0.025em;
-  margin: 0 0 28px;
+  margin: 0 0 24px;
   max-width: 1100px;
   color: #ffffff;
-  pointer-events: auto;
+  opacity: 0;
+  animation: hero-rise 800ms ease-out 1500ms forwards;
 }
 
-/* Each sentence on its own line so the two clauses don't break across the same line awkwardly. */
-.hero-line {
-  display: block;
-  white-space: normal;
-}
-
-.hero-line + .hero-line {
-  margin-top: 8px;
-}
-
-/* The word "opioid" — red */
+/* "opioid deaths" — single red phrase, kept together */
 .hero-emph-red {
   color: #d6403a;
+  white-space: nowrap;
 }
 
-/* The full second sentence — green, shifts to red on scroll */
+/* Second sentence — green, shifts to red as you scroll into the page.
+   The transition is driven by --hero-scroll (0 to 1). */
 .hero-emph {
-  color: #8ec986;
-  transition: color 600ms ease;
+  color: rgb(
+    calc(142 + var(--hero-scroll, 0) * 72),    /* 142 → 214 (8e → d6) */
+    calc(201 + var(--hero-scroll, 0) * -137),  /* 201 →  64 (c9 → 40) */
+    calc(134 + var(--hero-scroll, 0) * -76)    /* 134 →  58 (86 → 3a) */
+  );
+  transition: color 80ms linear;
 }
-.hero-emph.shifted { color: #d6403a; }
 
+/* === Deck === */
 .hero-deck {
-  font-size: clamp(14px, 1.3vw, 17px);
+  font-size: clamp(14px, 1.2vw, 16px);
   line-height: 1.55;
   color: #b8b8b6;
   margin: 0 0 28px;
-  max-width: 600px;
+  max-width: 580px;
   font-weight: 400;
-  pointer-events: auto;
+  opacity: 0;
+  animation: hero-rise 800ms ease-out 1900ms forwards;
 }
 
+/* === Byline === */
 .hero-byline {
   font-size: 12px;
   letter-spacing: 0.04em;
   color: #888;
   margin: 0;
-  pointer-events: auto;
+  opacity: 0;
+  animation: hero-rise 800ms ease-out 2200ms forwards;
 }
 
 .hero-byline a {
   color: #c8c8c8;
   text-decoration: underline;
-  text-decoration-color: rgba(255,255,255,0.25);
+  text-decoration-color: rgba(255, 255, 255, 0.25);
   text-underline-offset: 3px;
 }
 .hero-byline a:hover { text-decoration-color: var(--c-rust); }
 
+@keyframes hero-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* === Scroll cue === */
 .hero-scroll-cue {
-  position: fixed;
-  bottom: 28px; left: 50%;
+  position: absolute;
+  bottom: 24px; left: 50%;
   transform: translateX(-50%);
   display: flex; flex-direction: column;
-  align-items: center; gap: 8px;
-  font-size: 11px;
+  align-items: center; gap: 6px;
+  font-size: 10px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #888;
-  z-index: 3;
+  color: #666;
   pointer-events: none;
-  animation: scroll-bob 2.2s ease-in-out infinite;
+  opacity: 0;
+  animation: hero-fade 800ms ease-out 2600ms forwards, scroll-bob 2.2s ease-in-out 2600ms infinite;
   transition: opacity 200ms ease;
 }
 
 @keyframes scroll-bob {
   0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(6px); }
+  50%      { transform: translateX(-50%) translateY(6px); }
 }
 
-.hero-scroll-cue.faded { opacity: 0; }
+.hero-scroll-cue.faded { opacity: 0 !important; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .hero-kicker, .hero-headline, .hero-deck, .hero-byline, .hero-scroll-cue {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+  .hero-image-mask {
+    animation: none !important;
+    clip-path: none;
+  }
+  .hero-img { transform: none; }
+}
 
 
 /* ============================================================
@@ -372,6 +409,7 @@ a { color: inherit; }
   letter-spacing: -0.018em;
   margin: 0 0 10px;
   color: var(--ink);
+  text-wrap: balance;
 }
 
 .chart-deck {
@@ -379,7 +417,8 @@ a { color: inherit; }
   color: var(--ink-2);
   line-height: 1.5;
   margin: 0 0 28px;
-  max-width: 640px;
+  max-width: 760px;
+  text-wrap: balance;        /* even line lengths instead of one long + one orphan word */
 }
 
 .chart-wrap {
@@ -395,7 +434,7 @@ a { color: inherit; }
 
 #chart1 { aspect-ratio: 960 / 460; }
 #chart3 { aspect-ratio: 960 / 480; }
-#chart4 { aspect-ratio: 960 / 460; }
+#chart4 { aspect-ratio: 960 / 760; }
 #chart5 { aspect-ratio: 960 / 720; }
 
 /* Wider chart section — uses chart-header container (1120px) instead of prose-width 720px.
@@ -421,6 +460,43 @@ a { color: inherit; }
   line-height: 1.4;
   letter-spacing: 0.01em;
 }
+
+/* Chart toggle — used on Chart 4 to switch comparison year (2019 vs 2023). */
+.chart-toggle {
+  display: inline-flex;
+  gap: 0;
+  margin: 0 0 24px;
+  border: 1px solid var(--rule-strong);
+  background: var(--surface);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.toggle-btn {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-right: 1px solid var(--rule-strong);
+  padding: 9px 18px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: background 140ms ease, color 140ms ease;
+  letter-spacing: 0.01em;
+}
+.toggle-btn:last-child { border-right: 0; }
+.toggle-btn:hover {
+  color: var(--ink);
+  background: #f3efe8;
+}
+.toggle-btn.is-active {
+  background: var(--c-navy);
+  color: #fff;
+  font-weight: 600;
+}
+.toggle-btn.is-active:hover { background: var(--c-navy); }
 
 /* Shared chart axis & grid */
 .chart-section .axis line,

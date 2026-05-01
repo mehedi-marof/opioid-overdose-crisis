@@ -15,21 +15,27 @@
 <body>
 
 <!-- ============================================================
-     HERO
+     HERO — Kicker → Image → Headline → Deck → Byline
+     The photograph sits between the section label and the editorial
+     headline, becoming the visual transition into the story.
      ============================================================ -->
-<section class="hero-dark">
-  <div class="hero-content" id="hero-content">
+<section class="hero-dark" id="hero">
+  <div class="hero-frame">
     <p class="hero-kicker">America's Opioid Crisis</p>
-    <h1 class="hero-headline">
-      <span class="hero-line">For twenty-five years, <span class="hero-emph-red">opioid</span> deaths in America rose.</span>
-      <span class="hero-line"><span class="hero-emph">In 2024, they fell faster than ever.</span></span>
-    </h1>
-    <p class="hero-deck">The country recorded its sharpest single-year drop in overdose deaths in 2024, a reversal so steep that researchers are still debating what caused it.</p>
-    <p class="hero-byline">By <a href="https://mehedimarof.com" target="_blank" rel="noopener">Mehedi Marof</a> &middot; April 2026</p>
-  </div>
 
-  <div class="hero-banner" id="hero-banner">
-    <img src="img/hero.png" alt="" class="hero-img" id="hero-img">
+    <div class="hero-image-wrap" id="hero-image-wrap">
+      <div class="hero-image-mask" id="hero-image-mask">
+        <img src="img/hero.png" alt="A spilled prescription bottle, a flat-line heartbeat, and a wilted poppy on a black field." class="hero-img">
+      </div>
+    </div>
+
+    <h1 class="hero-headline" id="hero-headline">
+      For twenty-five years, <span class="hero-emph-red">opioid&nbsp;deaths</span> in America rose. <span class="hero-emph" id="hero-emph">In 2024, they fell faster than ever.</span>
+    </h1>
+
+    <p class="hero-deck">The country recorded its sharpest single-year drop in overdose deaths in 2024, a reversal so steep that researchers are still debating what caused it.</p>
+
+    <p class="hero-byline">By <a href="https://mehedimarof.com" target="_blank" rel="noopener">Mehedi Marof</a> &middot; April 2026</p>
   </div>
 
   <div class="hero-scroll-cue" aria-hidden="true">
@@ -45,7 +51,7 @@
      ============================================================ -->
 <section class="prose lede">
   <div class="container">
-    <p class="dropcap">In 2024, opioid overdose deaths in the United States fell to <strong>54,045</strong>, a decrease of about 25,300 from the year before, according to data from the <a href="https://www.cdc.gov/nchs/products/databriefs/db549.htm" target="_blank" rel="noopener">Centers for Disease Control and Prevention</a> compiled by <a href="https://www.kff.org/mental-health/opioid-overdose-deaths-national-trends-and-variation-by-demographics-and-states/" target="_blank" rel="noopener">KFF</a>, a health-policy research group. Total drug overdose deaths fell to <strong>79,384</strong> &mdash; the lowest figure since 2019.</p>
+    <p class="dropcap">In 2024, opioid overdose deaths in the United States fell to <strong>54,045</strong>, a decrease of about 25,300 from the year before, according to data from the <a href="https://www.cdc.gov/nchs/products/databriefs/db549.htm" target="_blank" rel="noopener">Centers for Disease Control and Prevention</a>. Total drug overdose deaths fell to <strong>79,384</strong> &mdash; the lowest figure since 2019.</p>
 
     <p>The drop was the largest in absolute and percentage terms ever recorded by the federal government. The CDC, in a <a href="https://www.cdc.gov/nchs/pressroom/nchs_press_releases/2025/20250514.htm" target="_blank" rel="noopener">May 2025 statement</a>, said the change represented "more than 81 lives saved every day."</p>
 
@@ -81,19 +87,19 @@
 <section class="chart-section chart-section-wide" id="chart-1">
   <div class="container chart-header">
     <h2 class="chart-title">In 2024, opioid overdose deaths fell sharply, nearing pre-pandemic levels but remaining above 2019.</h2>
-    <p class="chart-deck">Annual U.S. drug overdose deaths and opioid-involved deaths, 1999&ndash;2024.</p>
+    <p class="chart-deck">Annual U.S. drug overdose deaths and opioid-involved deaths, 1999 to 2024.</p>
 
     <div class="chart-wrap">
       <svg id="chart1" viewBox="0 0 960 460" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Line chart of total drug overdose deaths and opioid-involved deaths from 1999 to 2024."></svg>
     </div>
 
-    <p class="chart-source-mini">KFF analysis of CDC WONDER multiple-cause-of-death files.</p>
+    <p class="chart-source-mini">Analysis of CDC WONDER multiple-cause-of-death data.</p>
   </div>
 </section>
 
 <section class="prose">
   <div class="container">
-    <p>Since the opioid epidemic was declared a public health emergency in 2017, it has claimed more than half a million American lives, according to <a href="https://www.kff.org/mental-health/opioid-overdose-deaths-national-trends-and-variation-by-demographics-and-states/" target="_blank" rel="noopener">KFF analysis of CDC data</a>. What started as a crisis driven by prescription opioids and heroin has, in recent years, been dominated by illicit synthetic fentanyl &mdash; a substance about a hundred times more potent than morphine.</p>
+    <p>Since the opioid epidemic was declared a public health emergency in 2017, it has claimed more than half a million American lives. What started as a crisis driven by prescription opioids and heroin has, in recent years, been dominated by illicit synthetic fentanyl &mdash; a substance the CDC describes as roughly a hundred times more potent than morphine.</p>
   </div>
 </section>
 
@@ -104,11 +110,11 @@
   <div class="container">
     <p>The American opioid epidemic has unfolded in three waves, according to a <a href="https://www.cdc.gov/overdose-prevention/data-research/facts-stats/index.html" target="_blank" rel="noopener">CDC framework</a> adopted in 2018.</p>
 
-    <p>The first wave began in the late 1990s, when prescription opioids &mdash; drugs including OxyContin, Vicodin, and oxycodone &mdash; were marketed for chronic pain management. According to a CDC analysis, the rate of opioid prescribing in the United States nearly quadrupled between 1999 and 2010. Deaths followed the prescriptions.</p>
+    <p>The first wave began in the late 1990s, when prescription opioids &mdash; drugs including OxyContin, Vicodin, and oxycodone &mdash; were marketed for chronic pain management. The rate of opioid prescribing in the United States nearly quadrupled between 1999 and 2010, according to the CDC. Deaths followed the prescriptions.</p>
 
     <p>The second wave began around 2010. Reformulations of OxyContin and crackdowns on so-called pill mills closed off the legal supply for many people who had become dependent on prescription opioids. Many of those people moved to heroin, which was cheaper and increasingly available. Heroin deaths tripled between 2010 and 2014.</p>
 
-    <p>The third wave began around 2013, when illicitly manufactured fentanyl entered the American drug supply, first as an adulterant in heroin, then in counterfeit pills, then as the supply itself. By 2016, synthetic opioids had overtaken every other category as the leading driver of overdose deaths. In 2022, fentanyl-involved deaths reached a peak of approximately 73,800.</p>
+    <p>The third wave began around 2013, when illicitly manufactured fentanyl entered the American drug supply, first as an adulterant in heroin, then in counterfeit pills, then as the supply itself. By 2016, synthetic opioids had overtaken every other category as the leading driver of overdose deaths. Fentanyl-involved deaths reached a peak of about 73,800 in 2022 and 2023, then fell to 47,735 in 2024.</p>
   </div>
 </section>
 
@@ -136,22 +142,13 @@
 <section class="chart-section chart-section-wide" id="chart-3">
   <div class="container chart-header">
     <h2 class="chart-title">Three waves of an American epidemic.</h2>
-    <p class="chart-deck">U.S. opioid overdose deaths by drug type, 1999&ndash;2024. A single death may involve more than one drug.</p>
+    <p class="chart-deck">Annual U.S. opioid overdose deaths by drug type, 1999 to 2024. A single death may involve more than one drug.</p>
 
     <div class="chart-wrap">
       <svg id="chart3" viewBox="0 0 960 480" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Line chart of opioid overdose deaths by drug type from 1999 to 2024, with three wave bands."></svg>
     </div>
 
-    <p class="chart-source-mini">KFF analysis of CDC WONDER multiple-cause-of-death files.</p>
-  </div>
-</section>
-
-<section class="prose">
-  <div class="container">
-    <blockquote class="pullquote">
-      <p>"It's rare to find people who only overdose on cocaine or who only overdose on methamphetamines. Fentanyl is being used to lace the illicit drug market because it's very profitable."</p>
-      <cite>&mdash; Dr. Nora Volkow, director of the National Institute on Drug Abuse</cite>
-    </blockquote>
+    <p class="chart-source-mini">Analysis of CDC WONDER multiple-cause-of-death data.</p>
   </div>
 </section>
 
@@ -164,6 +161,11 @@
 
     <p>The first wave concentrated in Appalachia and parts of the Mountain West. By 2004, West Virginia had the highest opioid death rate in the country, a position the state held, with brief exceptions, for most of the next two decades. The second wave moved into the Northeast and Midwest. The heroin supply followed interstate corridors out of the Appalachian basin into Ohio, Pennsylvania, and New England.</p>
 
+    <blockquote class="pullquote">
+      <p>"It's rare to find people who only overdose on cocaine or who only overdose on methamphetamines. Fentanyl is being used to lace the illicit drug market because it's very profitable."</p>
+      <cite>&mdash; Dr. Nora Volkow, director of the National Institute on Drug Abuse</cite>
+    </blockquote>
+
     <p>The third wave reached different regions at different times. New England saw fentanyl arrive first; New Hampshire's opioid death rate jumped sharply in 2015. The Pacific Northwest and Alaska saw fentanyl arrive last, an unevenness that public-health researchers say is now visible in the recovery.</p>
   </div>
 </section>
@@ -171,7 +173,7 @@
 <section class="map-section" id="chart-2">
   <div class="container chart-header">
     <h2 class="chart-title">The crisis arrived everywhere at different times.</h2>
-    <p class="chart-deck">Opioid overdose death rate per 100,000 people, eight years from 1999 to 2024.</p>
+    <p class="chart-deck">Opioid overdose death rate per 100,000 people in each state, shown across eight key years from 1999 to 2024.</p>
   </div>
 
   <div class="scrolly" id="scrolly">
@@ -210,7 +212,7 @@
   </div>
 
   <div class="container">
-    <p class="chart-source-mini">KFF analysis of CDC WONDER. Rates are age-adjusted to the 2000 U.S. standard population.</p>
+    <p class="chart-source-mini">Analysis of CDC WONDER data. Rates are age-adjusted to the 2000 U.S. standard population.</p>
   </div>
 </section>
 
@@ -221,31 +223,27 @@
   <div class="container">
     <p>The 2024 drop was not a single national event. It was fifty different events with different shapes.</p>
 
-    <p>Forty-five states recorded fewer opioid deaths in 2024 than in 2023, according to KFF analysis of CDC data. Three states &mdash; South Dakota, Alaska, and Nevada &mdash; recorded slight increases. The states with the largest declines were generally those that had been hit hardest the longest. West Virginia's opioid death rate fell from 70 per 100,000 in 2020 to 38 in 2024, a 46 percent decline. Virginia and Wisconsin each fell 44 percent.</p>
+    <p>Every state and the District of Columbia recorded a lower opioid death rate in 2024 than in 2023, according to CDC data. The states with the largest declines were generally those that had been hit hardest the longest. West Virginia's rate fell from 71.6 per 100,000 in 2023 to 38.6 in 2024, a 46 percent decline &mdash; the steepest in the country. Virginia and Wisconsin each fell 44 percent.</p>
 
-    <p>But the picture changes when the comparison year is moved to 2019, before the pandemic surge. Measured against pre-pandemic levels, only about half of states have returned to where they were, KFF found. Alaska's 2024 opioid death rate is more than double its 2019 figure. Oregon and Washington are roughly twice as high.</p>
+    <blockquote class="pullquote">
+      <p>"This is the most dramatic improvement we have seen really since the opioid crisis began in the 1990s. A 27 percent drop in deaths, it's unprecedented."</p>
+      <cite>&mdash; Brian Mann, NPR addiction correspondent, May 2025</cite>
+    </blockquote>
+
+    <p>The picture changes when the comparison year is moved to 2019, before the pandemic surge. Measured against pre-pandemic levels, 31 states still have higher opioid death rates than they did in 2019. Alaska's 2024 rate is more than triple its 2019 figure. Oregon and Washington are roughly three times as high.</p>
   </div>
 </section>
 
 <section class="chart-section chart-section-wide" id="chart-4">
   <div class="container chart-header">
-    <h2 class="chart-title">About half of states still have opioid death rates above 2019 levels.</h2>
-    <p class="chart-deck">Change in opioid overdose death rate per 100,000 people, 2019 to 2024, by state.</p>
+    <h2 class="chart-title">Most states peaked in 2023 — and have been falling since.</h2>
+    <p class="chart-deck">Opioid overdose death rate per 100,000 people for each state in 2019, 2023, and 2024. States are sorted by their 2024 rate.</p>
 
     <div class="chart-wrap">
-      <svg id="chart4" viewBox="0 0 960 460" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Bar chart of state-level changes in opioid overdose death rate from 2019 to 2024."></svg>
+      <svg id="chart4" viewBox="0 0 960 760" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Slope chart of opioid overdose death rate by state in 2019, 2023, and 2024."></svg>
     </div>
 
-    <p class="chart-source-mini">KFF analysis of CDC WONDER. Hover any bar for state-level detail.</p>
-  </div>
-</section>
-
-<section class="prose">
-  <div class="container">
-    <blockquote class="pullquote">
-      <p>"This is the most dramatic improvement we have seen really since the opioid crisis began in the 1990s. A 27 percent drop in deaths, it's unprecedented."</p>
-      <cite>&mdash; Brian Mann, NPR addiction correspondent, May 2025</cite>
-    </blockquote>
+    <p class="chart-source-mini">Analysis of CDC WONDER data. Hover any row for state-level detail.</p>
   </div>
 </section>
 
@@ -256,26 +254,24 @@
   <div class="container">
     <p>The decline was not distributed equally across the populations inside it.</p>
 
-    <p>According to KFF analysis, every demographic group recorded fewer opioid deaths in 2024 than in 2023. Young adults aged 18 to 25 saw the largest decline &mdash; 42 percent &mdash; and now have a death rate lower than they did in 2019. Black Americans saw a 39 percent decline, the steepest of any racial or ethnic group, after years of disproportionate loss.</p>
+    <p>Looking back to 2019, three demographic groups now have lower opioid overdose death rates than they did before the pandemic. Adults aged 18 to 25 fell from 12.8 deaths per 100,000 to 9.3 &mdash; a 27 percent drop. White Americans fell from 18.9 to 17.5. The picture for everyone else is some variation of the same trend in reverse.</p>
 
-    <p>Other groups did not fare as well.</p>
+    <p>American Indian and Alaska Native people had the highest opioid death rate of any racial or ethnic group in 2024, at 35.5 per 100,000 &mdash; more than double their 2019 figure of 17.7. Black Americans saw their rate rise from 16.4 to 22.8 over the same period, a 39 percent increase.</p>
 
-    <p>American Indian and Alaska Native people had the highest opioid death rate in the country in 2024 at 35.5 per 100,000, KFF reported &mdash; about 56 percent above the national average. Their decline from 2023 was the smallest of any racial group, 28 percent. Measured against 2019, the AIAN opioid death rate has roughly doubled, up 101 percent.</p>
-
-    <p>Adults age 65 and older saw the smallest single-year decline of any age group, 20 percent, and their 2024 rate remained 63 percent above the 2019 baseline. KFF analysts said the slower recovery in older adults may reflect that substance use disorder is harder to detect in this group, and that few treatment programs are tailored to their needs.</p>
+    <p>Older adults are also worse off than before the pandemic. The death rate among adults 65 and older has nearly doubled since 2019, climbing from 3.8 per 100,000 to 7.0. Researchers studying the post-pandemic decline have suggested the slower recovery in this group may reflect that substance use disorder is harder to detect in older patients, and that few treatment programs are designed for their needs.</p>
   </div>
 </section>
 
 <section class="chart-section chart-section-wide" id="chart-5">
   <div class="container chart-header">
     <h2 class="chart-title">Some groups remain far above their 2019 levels.</h2>
-    <p class="chart-deck">Opioid overdose death rate per 100,000 people, 2019 vs. 2024, by race and ethnicity, age, and sex.</p>
+    <p class="chart-deck">Adults under 26 are now below pre-pandemic levels. American Indian and Alaska Native people, and adults over 65, remain far above. Opioid overdose death rate per 100,000 people, 2019 vs. 2024.</p>
 
     <div class="chart-wrap">
       <svg id="chart5" viewBox="0 0 960 720" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Comparison of opioid overdose death rates by demographic group, 2019 vs 2024."></svg>
     </div>
 
-    <p class="chart-source-mini">KFF analysis of CDC WONDER. AIAN refers to American Indian and Alaska Native.</p>
+    <p class="chart-source-mini">Analysis of CDC WONDER data. AIAN refers to American Indian and Alaska Native.</p>
   </div>
 </section>
 
@@ -290,7 +286,7 @@
 
     <p>A separate factor, less often cited in public statements but documented in the academic literature, is the size of the population at risk. A 2025 study published in <em>The Lancet Regional Health Americas</em> estimated that 109,783 additional opioid overdose deaths would have occurred between 2016 and 2023 had the at-risk population not declined.</p>
 
-    <p>The decline is also fragile, KFF analysts wrote in February 2026. Federal harm-reduction funding has been reduced under the Trump administration's 2026 budget, and the administration has redesignated illicit fentanyl as a "weapon of mass destruction," signaling a shift toward enforcement-focused responses. New synthetic opioids, including nitazenes &mdash; which the DEA has reported can be ten times more potent than fentanyl &mdash; have begun to appear in seizure data.</p>
+    <p>The decline is also fragile. Federal harm-reduction funding has been reduced under the Trump administration's 2026 budget, and the administration has redesignated illicit fentanyl as a "weapon of mass destruction," signaling a shift toward enforcement-focused responses. New synthetic opioids, including nitazenes &mdash; which the DEA has reported can be ten times more potent than fentanyl &mdash; have begun to appear in seizure data.</p>
 
     <p>For now, federal data show the wave receding. Provisional 2025 figures suggest the decline is continuing, though more slowly. Whether 2024 marks the beginning of a sustained reversal will become clearer when 2025 data are finalized in late 2026.</p>
   </div>
@@ -302,16 +298,15 @@
 <footer class="colophon">
   <div class="container">
     <h3>Notes on the data</h3>
-    <p>All death-certificate counts in this piece come from the National Vital Statistics System, processed by the Centers for Disease Control and Prevention and compiled by KFF for cross-state comparability. Rates are age-adjusted to the 2000 U.S. standard population. Drug overdose deaths are identified using ICD-10 underlying-cause codes X40&ndash;X44, X60&ndash;X64, X85, and Y10&ndash;Y14. Multiple-cause-of-death codes T40.0 through T40.4 and T40.6 are used to attribute deaths to specific opioid categories.</p>
-    <p>The State Unintentional Drug Overdose Reporting System (SUDORS) data used in this piece represents 43 reporting jurisdictions. California, Florida, Texas, Idaho, Louisiana, and North Dakota are not included.</p>
+    <p>All death-certificate counts in this piece come from the National Vital Statistics System, processed by the Centers for Disease Control and Prevention and accessed through the CDC WONDER multiple-cause-of-death online query system. Rates are age-adjusted to the 2000 U.S. standard population. Drug overdose deaths are identified using ICD-10 underlying-cause codes X40&ndash;X44, X60&ndash;X64, X85, and Y10&ndash;Y14. Multiple-cause-of-death codes T40.0 through T40.4 and T40.6 are used to attribute deaths to specific opioid categories.</p>
 
     <h3>Limits</h3>
-    <p>Death certificates undercount overdose deaths in jurisdictions with fewer trained medical examiners. Race and ethnicity are coded post-mortem and are known to misclassify Native American and multiracial decedents &mdash; meaning the AIAN figures cited in this piece, already the highest of any group, are likely undercounts. Illegally manufactured fentanyl and pharmaceutical fentanyl share an ICD-10 code; only SUDORS toxicology can distinguish them.</p>
+    <p>Death certificates undercount overdose deaths in jurisdictions with fewer trained medical examiners. Race and ethnicity are coded post-mortem and are known to misclassify Native American and multiracial decedents &mdash; meaning the AIAN figures cited in this piece, already the highest of any group, are likely undercounts. Illegally manufactured fentanyl and pharmaceutical fentanyl share an ICD-10 code (T40.4); the share attributable to each cannot be distinguished from death-certificate data alone.</p>
 
     <h3>Sources</h3>
-    <p>KFF, "Opioid Overdose Deaths: National Trends and Variation by Demographics and States," February 2026. CDC National Center for Health Statistics, "U.S. Life Expectancy Hits Record High as Drug Overdose Deaths Decline in 2024," January 29, 2026. CDC, "Drug Overdose Deaths in the United States, 2023&ndash;2024," NCHS Data Brief No. 549, January 2026. Garnett MF, Mini&ntilde;o AM, "Drug overdose deaths in the United States, 2003&ndash;2023," NCHS Data Brief No. 522, December 2024. Brian Mann, NPR, on PBS NewsHour, May 2025.</p>
+    <p>CDC National Center for Health Statistics, "U.S. Life Expectancy Hits Record High as Drug Overdose Deaths Decline in 2024," January 29, 2026. CDC, "Drug Overdose Deaths in the United States, 2023&ndash;2024," NCHS Data Brief No. 549, January 2026. Garnett MF, Mini&ntilde;o AM, "Drug overdose deaths in the United States, 2003&ndash;2023," NCHS Data Brief No. 522, December 2024. Brian Mann, NPR, on PBS NewsHour, May 2025. Friedman J et al., medRxiv preprint, December 2025.</p>
 
-    <p class="byline">By <a href="https://mehedimarof.com" target="_blank" rel="noopener">Mehedi Marof</a> &middot; April 2026</p>
+    <p class="byline">Reporting and analysis by <a href="https://mehedimarof.com" target="_blank" rel="noopener">Mehedi Marof</a> &middot; April 2026</p>
   </div>
 </footer>
 
