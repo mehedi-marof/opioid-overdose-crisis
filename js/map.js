@@ -10,7 +10,7 @@ const steps = [
     year: 1999,
     headline: "Before the wave",
     body: [
-      "About 8,000 Americans die of an opioid overdose. No state has a rate above 11 per 100,000. The crisis is still concentrated in pockets of New Mexico and Appalachia, where prescription painkillers are circulating widely."
+      "About 8,000 Americans die of an opioid overdose. No state has a rate above 10.2 per 100,000. The crisis is still concentrated in pockets of New Mexico and Appalachia, where prescription painkillers are circulating widely."
     ]
   },
   {
@@ -31,7 +31,7 @@ const steps = [
     year: 2013,
     headline: "Fentanyl enters the supply",
     body: [
-      "Illicitly manufactured fentanyl — fifty to a hundred times more potent than morphine - begins appearing in the American drug supply, often mixed into heroin without buyers knowing. The CDC will later mark this year as the start of the third wave."
+      "Illicitly manufactured fentanyl - fifty to a hundred times more potent than morphine - begins appearing in the American drug supply, often mixed into heroin without buyers knowing. The CDC will later mark this year as the start of the third wave."
     ]
   },
   {
