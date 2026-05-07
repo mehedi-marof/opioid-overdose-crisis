@@ -18,6 +18,11 @@
 
 <body>
 
+  <!-- PAGE PROGRESS -->
+  <div class="page-progress" aria-hidden="true">
+    <div class="page-progress-bar" id="page-progress-bar"></div>
+  </div>
+
   <!-- HERO -->
   <section class="hero-dark" id="hero">
     <div class="hero-frame">
@@ -99,8 +104,8 @@
   <section class="chart-section chart-section-wide" id="chart-1">
     <div class="container chart-header">
       <h2 class="chart-title">In 2024, opioid overdose deaths fell sharply, nearing pre-pandemic levels but remaining
-        above 2019</h2>
-      <p class="chart-deck">Annual U.S. drug overdose deaths and opioid-involved deaths, 1999 to 2024.</p>
+        above 2019.</h2>
+      <p class="chart-deck">Annual U.S. drug overdose deaths and opioid-involved deaths, 1999 to 2024</p>
 
       <div class="chart-wrap">
         <svg id="chart1" viewBox="0 0 960 460" preserveAspectRatio="xMidYMid meet" role="img"
@@ -168,15 +173,15 @@
     </div>
   </section>
 
-  <!-- Chart 3 -->
-  <section class="chart-section chart-section-wide" id="chart-3">
+  <!-- Chart 2 -->
+  <section class="chart-section chart-section-wide" id="chart-2">
     <div class="container chart-header">
       <h2 class="chart-title">Three waves of an American epidemic</h2>
       <p class="chart-deck">Annual U.S. opioid overdose deaths by drug type, 1999 to 2024. A single death may involve
         more than one drug.</p>
 
       <div class="chart-wrap">
-        <svg id="chart3" viewBox="0 0 960 480" preserveAspectRatio="xMidYMid meet" role="img"
+        <svg id="chart2" viewBox="0 0 960 480" preserveAspectRatio="xMidYMid meet" role="img"
           aria-label="Line chart of opioid overdose deaths by drug type from 1999 to 2024, with three wave bands."></svg>
       </div>
 
@@ -184,7 +189,7 @@
     </div>
   </section>
 
-  <!-- MAP -->
+  <!-- MAP - 3 -->
   <section class="prose">
     <div class="container">
       <p>The geography of the epidemic moved with the substance.</p>
@@ -206,11 +211,11 @@
     </div>
   </section>
 
-  <section class="map-section" id="chart-2">
+  <section class="map-section" id="chart-3">
     <div class="container chart-header">
-      <h2 class="chart-title">The crisis arrived everywhere at different times.</h2>
+      <h2 class="chart-title">The crisis arrived everywhere at different times</h2>
       <p class="chart-deck">Opioid overdose death rate per 100,000 people in each state, every year from 1999 to 2024.
-        Scroll to follow the narrative arc of the crisis, or drag the slider to any year.</p>
+        Scroll to follow the narrative arc of the crisis year by year.</p>
     </div>
 
     <div class="scrolly" id="scrolly">
@@ -222,19 +227,6 @@
 
         <svg id="map" viewBox="0 0 975 610" preserveAspectRatio="xMidYMid meet" role="img"
           aria-label="Map of the United States showing opioid overdose death rates by state."></svg>
-
-        <!-- Year dragger -->
-        <div class="year-scrubber">
-          <div class="scrubber-track">
-            <input type="range" id="year-slider" min="1999" max="2024" step="1" value="1999"
-              aria-label="Year selector: drag to change the year shown on the map" />
-            <div class="scrubber-ticks" id="scrubber-ticks"></div>
-          </div>
-          <div class="scrubber-bounds">
-            <span>1999</span>
-            <span>2024</span>
-          </div>
-        </div>
 
         <div class="map-legend">
           <div class="legend-row">
@@ -270,11 +262,11 @@
 
     <div class="container">
       <p class="chart-source-mini">Analysis of CDC WONDER data. Rates are age-adjusted to the 2000 U.S. standard
-        population. Hover any state for detail, or drag the year slider to explore.</p>
+        population. Hover any state for detail.</p>
     </div>
   </section>
 
-  <!-- CHART 4 -->
+  <!-- Chart 4 -->
   <section class="prose">
     <div class="container">
       <p>The 2024 drop was not a single national event. It was fifty different events with different shapes.</p>
@@ -298,7 +290,7 @@
 
   <section class="chart-section chart-section-wide" id="chart-4">
     <div class="container chart-header">
-      <h2 class="chart-title" id="chart4-title">Every state recorded fewer opioid deaths in 2024 - but about half remain
+      <h2 class="chart-title" id="chart4-title">Every state recorded fewer opioid deaths in 2024 — but about half remain
         above 2019</h2>
       <p class="chart-deck" id="chart4-deck">Percent change in opioid overdose death rate per 100,000 people, 2023 to
         2024.</p>
@@ -321,7 +313,7 @@
   <!-- CHART 5 -->
   <section class="prose">
     <div class="container">
-      <p>The decline was not distributed equally across the populations inside it.</p>
+      <p>The decline was not distributed equally across the populations inside it</p>
 
       <p>Looking back to 2019, only one demographic group has a lower opioid overdose death rate than before the
         pandemic. Adults aged 18 to 25 fell from 13.3 deaths per 100,000 to 9.3 - a 30 percent decline, the
@@ -342,10 +334,10 @@
 
   <section class="chart-section chart-section-wide" id="chart-5">
     <div class="container chart-header">
-      <h2 class="chart-title">Some groups remain far above their 2019 levels.</h2>
+      <h2 class="chart-title">Some groups remain far above their 2019 levels</h2>
       <p class="chart-deck">In 2024, AIAN people had the highest opioid overdose death rate
         of any racial group, and adults aged 26 to 44 had the highest of any age group. Adults aged 18 to 25 are the
-        only age group below their pre-pandemic level. Death rate per 100,000 people.</p>
+        only age group below their pre-pandemic level. Death rate per 100,000 people, 2019 vs. 2024.</p>
 
       <div class="chart-wrap">
         <svg id="chart5" viewBox="0 0 960 720" preserveAspectRatio="xMidYMid meet" role="img"
@@ -391,6 +383,8 @@
   <!-- COLOPHON -->
   <footer class="colophon">
     <div class="container">
+      <p class="byline">Data analysis, reporting, charts, web design by <a href="https://mehedimarof.com/"
+          target="_blank" rel="noopener"><strong>Mehedi Marof</strong></a></p>
       <h3>Notes on the data</h3>
       <p>All death-certificate counts in this piece come from the National Vital Statistics System, processed by the
         Centers for Disease Control and Prevention and accessed through the CDC WONDER multiple-cause-of-death online
@@ -412,9 +406,6 @@
         Brief No. 549, January 2026. Garnett MF, Mini&ntilde;o AM, "Drug overdose deaths in the United States,
         2003&ndash;2023," NCHS Data Brief No. 522, December 2024. Brian Mann, NPR, on PBS NewsHour, May 2025. Friedman J
         et al., medRxiv preprint, December 2025.</p>
-
-      <p class="byline">Data analysis, reporting, charts, web design by <a href="https://mehedimarof.com/"
-          target="_blank" rel="noopener"><strong>Mehedi Marof</strong></a></p>
     </div>
   </footer>
 
@@ -426,10 +417,43 @@
   <script src="js/tooltip.js"></script>
   <script src="js/hero.js"></script>
   <script src="js/chart1.js"></script>
-  <script src="js/chart3.js"></script>
+  <script src="js/chart2.js"></script>
   <script src="js/chart4.js"></script>
   <script src="js/chart5.js"></script>
   <script src="js/map.js"></script>
+
+  <!-- PAGE PROGRESS SCRIPT -->
+  <script>
+    (function () {
+      const bar = document.getElementById("page-progress-bar");
+      if (!bar) return;
+
+      function updateProgress() {
+        const scrollTop = window.scrollY;
+        const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = pageHeight > 0 ? (scrollTop / pageHeight) * 100 : 0;
+
+        bar.style.width = Math.min(100, Math.max(0, progress)) + "%";
+      }
+
+      let ticking = false;
+
+      window.addEventListener("scroll", function () {
+        if (!ticking) {
+          requestAnimationFrame(function () {
+            updateProgress();
+            ticking = false;
+          });
+
+          ticking = true;
+        }
+      }, { passive: true });
+
+      window.addEventListener("resize", updateProgress);
+
+      updateProgress();
+    })();
+  </script>
 
 </body>
 

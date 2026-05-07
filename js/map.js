@@ -1,77 +1,77 @@
-// scrollytelling map of US opioid overdose death rates by state
+// Scrollytelling map
 
 const MIN_YEAR = 1999;
 const MAX_YEAR = 2024;
 
-// Narrative cards: the map updates every year, but only select few years show text.
+// Narrative cards: the map updates every year, but only these years show text.
 
 const steps = [
   {
     year: 1999,
-    headline: "Before the wave.",
+    headline: "Before the wave",
     body: [
       "About 8,000 Americans die of an opioid overdose. No state has a rate above 11 per 100,000. The crisis is still concentrated in pockets of New Mexico and Appalachia, where prescription painkillers are circulating widely."
     ]
   },
   {
     year: 2007,
-    headline: "Appalachia, first.",
+    headline: "Appalachia, first",
     body: [
       "West Virginia is now the country's rate leader, at 19 per 100,000. OxyContin, marketed since 1996 as a low-risk treatment for chronic pain, has been widely dispensed. The deaths follow the pills."
     ]
   },
   {
     year: 2012,
-    headline: "Pills give way to heroin.",
+    headline: "Pills give way to heroin",
     body: [
       "OxyContin has been reformulated; pill mills have been shut down. Many people dependent on prescription opioids turn to heroin, which is cheaper and more available. Heroin deaths nearly double between 2010 and 2012."
     ]
   },
   {
     year: 2013,
-    headline: "Fentanyl enters the supply.",
+    headline: "Fentanyl enters the supply",
     body: [
-      "Illicitly manufactured fentanyl - fifty to a hundred times more potent than morphine - begins appearing in the American drug supply, often mixed into heroin without buyers knowing. The CDC will later mark this year as the start of the third wave."
+      "Illicitly manufactured fentanyl — fifty to a hundred times more potent than morphine - begins appearing in the American drug supply, often mixed into heroin without buyers knowing. The CDC will later mark this year as the start of the third wave."
     ]
   },
   {
     year: 2017,
-    headline: "Fentanyl takes over.",
+    headline: "Fentanyl takes over",
     body: [
       "Synthetic opioids overtake every other category as the leading driver of overdose deaths. President Trump declares a public-health emergency. West Virginia's rate hits 49.6, the highest ever recorded by a state to that point."
     ]
   },
   {
     year: 2019,
-    headline: "Pre-pandemic baseline.",
+    headline: "Pre-pandemic baseline",
     body: [
       "Sixteen states are above 20 per 100,000; six are above 30. After a small decline in 2018, public-health officials briefly hope the worst has passed. This is the baseline the country will spend the next five years trying to return to."
     ]
   },
   {
     year: 2020,
-    headline: "The pandemic surge.",
+    headline: "The pandemic surge",
     body: [
       "The pandemic sharply worsens the crisis. Treatment is disrupted, isolation deepens and fentanyl becomes more entrenched in the illicit drug supply."
     ]
   },
   {
     year: 2022,
-    headline: "Peak.",
+    headline: "Peak",
     body: [
       "Opioid-involved deaths reach 81,806 - the highest figure ever recorded. Thirty-four states are above 20 per 100,000; nineteen are above 30. The Covid-19 pandemic, which disrupted treatment and deepened isolation, accelerated everything."
     ]
   },
   {
     year: 2023,
-    headline: "First signs of reversal.",
+    headline: "First signs of reversal",
     body: [
       "Opioid-involved deaths fall about 3 percent nationally - the largest annual drop in nearly a decade. The decline is uneven: several Eastern states post double-digit drops, while Alaska, Oregon and Washington record their highest rates yet."
     ]
   },
   {
     year: 2024,
-    headline: "A sharp reversal.",
+    headline: "A sharp reversal",
     body: [
       "Opioid-involved deaths fall to 54,045 - about one-third lower than the year before. Every state and the District of Columbia records a lower opioid death rate than in 2023. West Virginia falls from 71.6 to 38.6 deaths per 100,000. Alaska, at 37, remains among the hardest-hit states."
     ]
@@ -241,12 +241,6 @@ async function buildMap() {
     const yearLabel = document.getElementById("map-year");
     if (yearLabel) yearLabel.textContent = year;
 
-    // Keep slider synced with scroll.
-    const slider = document.getElementById("year-slider");
-    if (slider && +slider.value !== year) {
-      slider.value = year;
-    }
-
     // Recolor states.
     svg.selectAll("path.state")
       .attr("fill", function () {
@@ -405,7 +399,7 @@ function setActiveYear(year) {
   });
 }
 
-// Scrollama
+// Scrollama text per specific year
 
 function wireScrollama(paintYear) {
   const stepEls = document.querySelectorAll(".step");
@@ -449,40 +443,6 @@ function wireScrollama(paintYear) {
   paintMaybe(MIN_YEAR);
 }
 
-// Year slider
-
-function wireSlider(paintYear) {
-  const slider = document.getElementById("year-slider");
-  if (!slider) return;
-
-  const ticksEl = document.getElementById("scrubber-ticks");
-
-  if (ticksEl) {
-    ticksEl.innerHTML = "";
-
-    const narrativeYears = new Set(steps.map(s => s.year));
-
-    for (let year = MIN_YEAR; year <= MAX_YEAR; year++) {
-      const tick = document.createElement("span");
-      tick.className = "scrubber-tick";
-
-      if (narrativeYears.has(year)) {
-        tick.classList.add("is-narrative");
-      }
-
-      tick.style.left = `${((year - MIN_YEAR) / (MAX_YEAR - MIN_YEAR)) * 100}%`;
-      ticksEl.appendChild(tick);
-    }
-  }
-
-  slider.addEventListener("input", e => {
-    const year = +e.target.value;
-
-    paintYear(year);
-    setActiveYear(year);
-  });
-}
-
 // ---- Boot ----
 
 async function main() {
@@ -491,7 +451,6 @@ async function main() {
   const { paintYear } = await buildMap();
 
   wireScrollama(paintYear);
-  wireSlider(paintYear);
 }
 
 if (document.readyState === "loading") {

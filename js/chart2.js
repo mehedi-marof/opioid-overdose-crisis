@@ -1,4 +1,4 @@
-// Chart 3 — Three waves of an American epidemic
+// Chart 2 — Three waves of an American epidemic
 
 (function () {
   const W = 960, H = 480;
@@ -28,7 +28,7 @@
     });
 
   function draw(data) {
-    const svg = d3.select("#chart3")
+    const svg = d3.select("#chart2")
       .attr("width", W).attr("height", H);
 
     const g = svg.append("g")

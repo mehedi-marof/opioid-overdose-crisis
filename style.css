@@ -58,6 +58,26 @@ a {
   max-width: var(--w-wide);
 }
 
+/* PAGE PROGRESS */
+
+.page-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  z-index: 10000;
+  background: transparent;
+  pointer-events: none;
+}
+
+.page-progress-bar {
+  width: 0%;
+  height: 100%;
+  background: var(--c-rust);
+  transition: width 80ms linear;
+}
+
 /* HERO */
 
 .hero-dark {
@@ -464,7 +484,7 @@ a {
   aspect-ratio: 960 / 460;
 }
 
-#chart3 {
+#chart2 {
   aspect-ratio: 960 / 480;
 }
 
@@ -629,7 +649,7 @@ a {
 
 #map {
   width: 100%;
-  max-width: 760px;
+  max-width: 860px;
   max-height: 70vh;
   height: auto;
   margin: 0 0 0 32px;
@@ -767,98 +787,6 @@ a {
   stroke-width: 0.8px;
 }
 
-.year-scrubber {
-  position: absolute;
-  top: 24px;
-  right: 64px;
-  z-index: 4;
-  width: 240px;
-  padding: 12px 14px;
-  background: rgba(250, 250, 250, 0.92);
-  border: 1px solid var(--rule);
-  font-size: 11px;
-  color: var(--ink-2);
-}
-
-.scrubber-track {
-  position: relative;
-  height: 30px;
-  margin: 4px 0 2px;
-}
-
-.year-scrubber input[type="range"] {
-  appearance: none;
-  -webkit-appearance: none;
-  position: absolute;
-  top: 12px;
-  left: 0;
-  z-index: 2;
-  width: 100%;
-  height: 4px;
-  margin: 0;
-  background: var(--rule-strong);
-  border-radius: 2px;
-  outline: none;
-  cursor: pointer;
-}
-
-.year-scrubber input[type="range"]::-webkit-slider-thumb {
-  appearance: none;
-  -webkit-appearance: none;
-  width: 14px;
-  height: 14px;
-  background: var(--c-rust);
-  border: 2px solid var(--bg);
-  border-radius: 50%;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  cursor: grab;
-}
-
-.year-scrubber input[type="range"]::-webkit-slider-thumb:active {
-  cursor: grabbing;
-}
-
-.year-scrubber input[type="range"]::-moz-range-thumb {
-  width: 14px;
-  height: 14px;
-  background: var(--c-rust);
-  border: 2px solid var(--bg);
-  border-radius: 50%;
-  cursor: grab;
-}
-
-.scrubber-ticks {
-  position: absolute;
-  top: 22px;
-  left: 0;
-  right: 0;
-  height: 6px;
-  pointer-events: none;
-}
-
-.scrubber-tick {
-  position: absolute;
-  top: 0;
-  width: 1px;
-  height: 4px;
-  background: var(--rule-strong);
-  transform: translateX(-50%);
-}
-
-.scrubber-tick.is-narrative {
-  width: 2px;
-  height: 6px;
-  background: var(--ink-3);
-}
-
-.scrubber-bounds {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 2px;
-  font-size: 10px;
-  color: var(--ink-3);
-  letter-spacing: 0.04em;
-}
 
 .steps {
   position: relative;
@@ -1092,14 +1020,6 @@ a {
     max-width: 220px;
     font-size: 11px;
     line-height: 1.35;
-  }
-
-  .year-scrubber {
-    top: 92px;
-    left: 16px;
-    right: 16px;
-    width: auto;
-    padding: 10px 12px;
   }
 
   .map-legend {
