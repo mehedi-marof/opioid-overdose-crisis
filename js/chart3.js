@@ -6,20 +6,26 @@
   const innerW = W - M.left - M.right;
   const innerH = H - M.top - M.bottom;
 
+  // same palette used everywhere on the page
   const FENTANYL = "#a8312a";   // oxblood
-  const RX = "#8a6f4a";   // muted brown
-  const HEROIN = "#6b8e23";   // sage green 
+  const RX = "#8a6f4a";   //  brown
+  const HEROIN = "#6b8e23";   // green
   const BAND_BG = "#f0eee8";   // cream
 
-  // Load and parse the CSV
-  d3.csv("data/01_national_trend.csv", d => ({
-    year: +d.year,
-    rx: +d.rx_opioids_deaths,
-    fentanyl: +d.fentanyl_deaths,
-    heroin: +d.heroin_deaths
-  })).then(rows => {
-    draw(rows.filter(d => d.year >= 1999));
-  });
+  fetch("data/01_national_trend.csv")
+    .then(r => r.text())
+    .then(csv => {
+      const rows = csv.trim().split(/\r?\n/).slice(1).map(line => {
+        const f = line.split(",");
+        return {
+          year: Number(f[0]),
+          rx: Number(f[5]),
+          fentanyl: Number(f[6]),
+          heroin: Number(f[7])
+        };
+      });
+      draw(rows.filter(d => d.year >= 1999));
+    });
 
   function draw(data) {
     const svg = d3.select("#chart3")
@@ -127,11 +133,18 @@
     // ---- End-of-line labels ----
     const last = data[data.length - 1];
 
+    // Labels for the three lines
     g.append("text")
       .attr("x", x(last.year) + 12).attr("y", y(last.fentanyl))
       .attr("dy", "0.32em")
       .attr("fill", FENTANYL).attr("font-size", 14).attr("font-weight", 600)
       .text("Fentanyl");
+
+    g.append("text")
+      .attr("x", x(last.year) + 12).attr("y", y(last.fentanyl) + 16)
+      .attr("dy", "0.32em")
+      .attr("fill", "#888").attr("font-size", 11).attr("font-weight", 500)
+      .text("& other synthetics");
 
     g.append("text")
       .attr("x", x(last.year) + 12).attr("y", y(last.rx))
@@ -180,7 +193,7 @@
 
         const html =
           `<div class="tip-name">${d.year}</div>` +
-          `<div class="tip-row"><span>Fentanyl</span><span class="tip-val">${d.fentanyl.toLocaleString()}</span></div>` +
+          `<div class="tip-row"><span>Fentanyl &amp; other synthetics</span><span class="tip-val">${d.fentanyl.toLocaleString()}</span></div>` +
           `<div class="tip-row"><span>Prescription</span><span class="tip-val">${d.rx.toLocaleString()}</span></div>` +
           `<div class="tip-row"><span>Heroin</span><span class="tip-val">${d.heroin.toLocaleString()}</span></div>`;
         if (window.tooltip) window.tooltip.show(html, event);

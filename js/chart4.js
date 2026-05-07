@@ -7,7 +7,7 @@
   const innerH = H - M.top - M.bottom;
 
   const ABOVE = "#a8312a";   // oxblood
-  const BELOW = "#6b8e23";   // sage green
+  const BELOW = "#6b8e23";   // green
 
   // Full state name lookup for tooltip
   const STATE_NAMES = {
@@ -30,7 +30,7 @@
     v23: { value: -33, label: "U.S. average: -33%" }
   };
 
-  const TITLE = "Every state's opioid death rate fell in 2024 — but over half remain above pre-pandemic levels";
+  const TITLE = "Every state's opioid death rate fell in 2024 - but over half remain above pre-pandemic levels";
   const COPY = {
     v19: {
       deck: "Percent change in opioid overdose death rate per 100,000 people, 2019 to 2024"

@@ -6,7 +6,7 @@
   const innerW = W - M.left - M.right;
   const innerH = H - M.top - M.bottom;
 
-  const DRUG = "#8a6f4a"; 
+  const DRUG = "#8a6f4a";
   const OPIOID = "#a8312a";
 
   // Load and parse the CSV 

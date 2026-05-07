@@ -1,9 +1,9 @@
-/* Opioid story styles */
+/* America's Opioid Crisis: stylesheet
+ */
 
 :root {
   /* Surfaces */
-  --bg: #ffffff;
-  --bg-dark: #050503;
+  --bg: #fafafa;
   --surface: #ffffff;
   --rule: #e8e8e6;
   --rule-strong: #cfcfcc;
@@ -12,10 +12,11 @@
   --ink: #1a1612;
   --ink-2: #4a4a4a;
   --ink-3: #888;
+  /* Chart colors */
+  --c-navy: #0a2c4e;
 
-  /* Editorial accents */
+  /* accent — kicker, stat numbers, hover */
   --c-rust: #c44536;
-  --c-navy: #36495f;
 
   /* Layout */
   --w: 720px;
@@ -57,8 +58,7 @@ a {
   max-width: var(--w-wide);
 }
 
-
-/* -- HERO -- */
+/* HERO */
 
 .hero-dark {
   position: relative;
@@ -93,14 +93,13 @@ a {
   animation: hero-fade 600ms ease-out 100ms forwards;
 }
 
-/* === Image === */
+/* Image — reveals left-to-right */
 .hero-image-wrap {
   width: 100%;
   max-width: 1100px;
   margin: 0 0 36px;
 }
 
-/* Image reveal */
 .hero-image-mask {
   clip-path: inset(0 100% 0 0);
   animation: hero-reveal 1800ms cubic-bezier(0.4, 0, 0.2, 1) 300ms forwards;
@@ -116,8 +115,6 @@ a {
   }
 }
 
-/* Hero scroll effect */
-
 .hero-img {
   display: block;
   width: 100%;
@@ -127,7 +124,7 @@ a {
   transition: transform 60ms linear;
 }
 
-/* === Headline === */
+/* Headline */
 .hero-headline {
   font-size: clamp(26px, 3.6vw, 48px);
   font-weight: 700;
@@ -140,25 +137,20 @@ a {
   animation: hero-rise 800ms ease-out 1500ms forwards;
 }
 
-/* Red headline phrase */
+/* "opioid deaths" */
 .hero-emph-red {
   color: #d6403a;
   white-space: nowrap;
 }
 
-/* Scroll-based headline color */
 .hero-emph {
   color: rgb(calc(142 + var(--hero-scroll, 0) * 72),
-      /* 142 → 214 (8e → d6) */
       calc(201 + var(--hero-scroll, 0) * -137),
-      /* 201 →  64 (c9 → 40) */
-      calc(134 + var(--hero-scroll, 0) * -76)
-      /* 134 →  58 (86 → 3a) */
-    );
+      calc(134 + var(--hero-scroll, 0) * -76));
   transition: color 80ms linear;
 }
 
-/* === Deck === */
+/* Deck */
 .hero-deck {
   font-size: clamp(14px, 1.2vw, 16px);
   line-height: 1.55;
@@ -170,7 +162,7 @@ a {
   animation: hero-rise 800ms ease-out 1900ms forwards;
 }
 
-/* === Byline === */
+/* Byline */
 .hero-byline {
   font-size: 12px;
   letter-spacing: 0.04em;
@@ -213,7 +205,7 @@ a {
   }
 }
 
-/* === Scroll cue === */
+/* Scroll cue */
 .hero-scroll-cue {
   position: absolute;
   bottom: 24px;
@@ -273,8 +265,7 @@ a {
   }
 }
 
-
-/* === PROSE ==== */
+/* PROSE */
 
 .prose {
   padding: 24px 0;
@@ -284,7 +275,7 @@ a {
   max-width: var(--w);
 }
 
-/* Avoid double spacing between prose blocks */
+/* Keep adjacent prose sections tight */
 .prose+.prose {
   padding-top: 0;
 }
@@ -308,7 +299,7 @@ a {
   font-style: italic;
 }
 
-/* Inline hyperlinks */
+/* Links */
 .prose a {
   color: var(--ink);
   text-decoration: none;
@@ -350,7 +341,6 @@ a {
   position: relative;
 }
 
-/* Pull quote mark */
 .pullquote::before {
   content: "\201C";
   display: block;
@@ -384,8 +374,7 @@ a {
   display: block;
 }
 
-
-/* ==== STAT CALLOUT ==== */
+/* STAT CALLOUT */
 
 .stat-callout {
   padding: 48px 0;
@@ -435,7 +424,7 @@ a {
   font-weight: 600;
 }
 
-/* ==== CHART SECTIONS ==== */
+/* CHART SECTIONS */
 
 .chart-section {
   padding: 56px 0;
@@ -480,7 +469,7 @@ a {
 }
 
 #chart4 {
-  aspect-ratio: 960 / 485;
+  aspect-ratio: 960 / 460;
 }
 
 #chart5 {
@@ -488,10 +477,10 @@ a {
 }
 
 .chart-section-wide .container.chart-header {
-  max-width: 1120px;
+  max-width: 1240px;
 }
 
-/* Tiny attribution under each viz. */
+/* Chart note */
 .chart-source-mini {
   font-size: 11px;
   color: var(--ink-3);
@@ -536,16 +525,15 @@ a {
 }
 
 .toggle-btn.is-active {
-  background: #8a6f4a;
+  background: var(--c-navy);
   color: #fff;
   font-weight: 600;
 }
 
 .toggle-btn.is-active:hover {
-  background: #8a6f4a;
+  background: var(--c-navy);
 }
 
-/* Shared chart axis & grid */
 .chart-section .axis line,
 .chart-section .axis path {
   stroke: var(--rule);
@@ -565,7 +553,7 @@ a {
   display: none;
 }
 
-/* === Tooltip === */
+/* TOOLTIP */
 .tooltip {
   position: fixed;
   display: none;
@@ -588,8 +576,9 @@ a {
 }
 
 .tooltip .tip-year {
+  margin-bottom: 6px;
   color: #bbb;
-  margin-bottom: 4px;
+  font-size: 11px;
 }
 
 .tooltip .tip-row {
@@ -613,8 +602,7 @@ a {
   margin: 6px 0;
 }
 
-
-/* ==== MAP ==== */
+/* MAP / SCROLLYTELLING */
 
 .map-section {
   padding: 56px 0 0;
@@ -622,8 +610,8 @@ a {
 
 .scrolly {
   position: relative;
-  margin: 32px auto 0;
   max-width: 1280px;
+  margin: 32px auto 0;
   padding: 0 32px;
 }
 
@@ -636,22 +624,24 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  overflow: hidden;
 }
 
 #map {
   width: 100%;
   max-width: 760px;
-  margin: 0 0 0 32px;
   max-height: 70vh;
   height: auto;
+  margin: 0 0 0 32px;
+  display: block;
 }
 
 .map-meta {
   position: absolute;
   top: 56px;
   left: 64px;
-  pointer-events: none;
   z-index: 3;
+  pointer-events: none;
 }
 
 .map-year {
@@ -660,19 +650,20 @@ a {
   line-height: 0.95;
   letter-spacing: -0.03em;
   color: var(--ink);
+  font-feature-settings: "tnum" 1, "lnum" 1;
 }
 
 .map-caption {
+  margin-top: 4px;
   font-size: 12px;
   color: var(--ink-3);
   letter-spacing: 0.04em;
-  margin-top: 4px;
 }
 
 .state {
   stroke: var(--bg);
   stroke-width: 0.6px;
-  transition: fill 700ms ease;
+  transition: fill 700ms ease, stroke 150ms ease, stroke-width 150ms ease;
   cursor: pointer;
 }
 
@@ -703,21 +694,21 @@ a {
 
 .callout-rate {
   font-size: 11px;
-  fill: var(--c-navy);
   font-weight: 600;
+  fill: var(--c-navy);
 }
 
 .map-legend {
   position: absolute;
   bottom: 48px;
   left: 64px;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   gap: 14px;
-  background: rgba(250, 250, 250, 0.92);
   padding: 12px 16px;
+  background: rgba(250, 250, 250, 0.92);
   border: 1px solid var(--rule);
-  z-index: 3;
 }
 
 .legend-row {
@@ -726,11 +717,15 @@ a {
   gap: 12px;
 }
 
+.legend-row+.legend-row {
+  padding-top: 16px;
+}
+
 .legend-label {
+  min-width: 130px;
   font-size: 11px;
   color: var(--ink-2);
   letter-spacing: 0.04em;
-  min-width: 130px;
 }
 
 .legend-bins {
@@ -739,9 +734,9 @@ a {
 }
 
 .legend-bins .bin {
+  position: relative;
   width: 28px;
   height: 12px;
-  position: relative;
 }
 
 .legend-bins .bin span {
@@ -750,10 +745,6 @@ a {
   left: 0;
   font-size: 10px;
   color: var(--ink-3);
-}
-
-.legend-row+.legend-row {
-  padding-top: 16px;
 }
 
 .legend-bubbles {
@@ -776,77 +767,173 @@ a {
   stroke-width: 0.8px;
 }
 
-/* Map tooltip uses same .tooltip class */
+.year-scrubber {
+  position: absolute;
+  top: 24px;
+  right: 64px;
+  z-index: 4;
+  width: 240px;
+  padding: 12px 14px;
+  background: rgba(250, 250, 250, 0.92);
+  border: 1px solid var(--rule);
+  font-size: 11px;
+  color: var(--ink-2);
+}
+
+.scrubber-track {
+  position: relative;
+  height: 30px;
+  margin: 4px 0 2px;
+}
+
+.year-scrubber input[type="range"] {
+  appearance: none;
+  -webkit-appearance: none;
+  position: absolute;
+  top: 12px;
+  left: 0;
+  z-index: 2;
+  width: 100%;
+  height: 4px;
+  margin: 0;
+  background: var(--rule-strong);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.year-scrubber input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  background: var(--c-rust);
+  border: 2px solid var(--bg);
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  cursor: grab;
+}
+
+.year-scrubber input[type="range"]::-webkit-slider-thumb:active {
+  cursor: grabbing;
+}
+
+.year-scrubber input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: var(--c-rust);
+  border: 2px solid var(--bg);
+  border-radius: 50%;
+  cursor: grab;
+}
+
+.scrubber-ticks {
+  position: absolute;
+  top: 22px;
+  left: 0;
+  right: 0;
+  height: 6px;
+  pointer-events: none;
+}
+
+.scrubber-tick {
+  position: absolute;
+  top: 0;
+  width: 1px;
+  height: 4px;
+  background: var(--rule-strong);
+  transform: translateX(-50%);
+}
+
+.scrubber-tick.is-narrative {
+  width: 2px;
+  height: 6px;
+  background: var(--ink-3);
+}
+
+.scrubber-bounds {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2px;
+  font-size: 10px;
+  color: var(--ink-3);
+  letter-spacing: 0.04em;
+}
 
 .steps {
   position: relative;
-  margin-top: -100vh;
-  padding: 30vh 0 30vh;
   z-index: 2;
+  margin-top: -100vh;
+  padding: 30vh 0 35vh;
   pointer-events: none;
 }
 
 .step {
-  min-height: 60vh;
+  min-height: 28vh;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   padding: 0 32px 0 0;
-  margin-bottom: 30vh;
+  margin: 0;
   pointer-events: none;
+}
+
+.step.has-card {
+  min-height: 70vh;
+}
+
+.step.is-blank {
+  min-height: 28vh;
 }
 
 .step-card {
   width: 340px;
   max-width: 92%;
+  padding: 22px 24px;
   background: #ffffff;
   border: 1px solid var(--rule);
-  border-left: 3px solid var(--ink-3);
-  padding: 22px 24px;
-  opacity: 0.6;
-  transition: opacity 400ms ease, border-left-color 400ms ease;
-  pointer-events: auto;
+  border-left: 3px solid var(--c-navy);
+  box-shadow: 0 8px 24px rgba(26, 22, 18, 0.08);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 300ms ease, transform 300ms ease, visibility 300ms ease;
+  pointer-events: none;
 }
 
 .step.is-active .step-card {
   opacity: 1;
-  border-left-color: var(--c-navy);
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .step-year {
-  font-size: 12px;
-  font-weight: 600;
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 700;
   color: var(--c-rust);
-  letter-spacing: 0.06em;
-  margin: 0 0 6px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .step-headline {
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 1.25;
-  letter-spacing: -0.01em;
-  margin: 0 0 12px;
+  margin: 0 0 10px;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: -0.018em;
   color: var(--ink);
 }
 
-.step-body {
+.step-body p {
+  margin: 0;
   font-size: 15px;
   line-height: 1.55;
   color: var(--ink-2);
-  margin: 0;
 }
 
-.step-body p {
-  margin: 0 0 10px;
-}
-
-.step-body p:last-child {
-  margin-bottom: 0;
-}
-
-
-/* ==== COLOPHON ==== */
+/* COLOPHON */
 
 .colophon {
   border-top: 1px solid var(--ink);
@@ -887,16 +974,13 @@ a {
   text-underline-offset: 2px;
 }
 
-/* ==== MOBILE ==== */
+/* MOBILE */
 
 @media (max-width: 800px) {
-
-  /* Hero - mobile */
   .hero-dark {
     height: auto;
     min-height: 100vh;
     padding: 48px 0 64px;
-    /* tighter than desktop's clamp(48px, 8vh, 96px) */
   }
 
   .hero-frame {
@@ -919,9 +1003,9 @@ a {
   }
 
   .hero-deck {
-    font-size: 14px;
-    margin-bottom: 18px;
     max-width: 100%;
+    margin-bottom: 18px;
+    font-size: 14px;
   }
 
   .hero-img {
@@ -932,12 +1016,20 @@ a {
     bottom: 14px;
   }
 
+  .container {
+    padding: 0 20px;
+  }
+
   .lede {
     padding-top: 40px;
   }
 
   .dropcap::first-letter {
     font-size: 48px;
+  }
+
+  .prose p {
+    font-size: 17px;
   }
 
   .stat-line {
@@ -949,25 +1041,42 @@ a {
     font-size: 64px;
   }
 
+  .chart-section {
+    padding: 44px 0;
+  }
+
   .chart-title {
     font-size: 22px;
+  }
+
+  .chart-deck {
+    font-size: 15px;
+  }
+
+  .pullquote {
+    margin: 32px 0;
   }
 
   .pullquote p {
     font-size: 20px;
   }
 
+  .map-section {
+    padding-top: 40px;
+  }
+
   .scrolly {
     padding: 0 16px;
   }
 
-  #map {
-    margin: 0 auto;
-    max-width: 100%;
+  .map-stage {
+    height: 100vh;
   }
 
-  .map-year {
-    font-size: 48px;
+  #map {
+    max-width: 100%;
+    max-height: 58vh;
+    margin: 32px auto 0;
   }
 
   .map-meta {
@@ -975,11 +1084,34 @@ a {
     left: 24px;
   }
 
-  .map-legend {
-    bottom: 16px;
+  .map-year {
+    font-size: 48px;
+  }
+
+  .map-caption {
+    max-width: 220px;
+    font-size: 11px;
+    line-height: 1.35;
+  }
+
+  .year-scrubber {
+    top: 92px;
     left: 16px;
     right: 16px;
+    width: auto;
     padding: 10px 12px;
+  }
+
+  .map-legend {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    padding: 10px 12px;
+    gap: 10px;
+  }
+
+  .legend-row {
+    gap: 10px;
   }
 
   .legend-label {
@@ -992,15 +1124,48 @@ a {
     height: 10px;
   }
 
+  .legend-bubbles {
+    gap: 10px;
+  }
+
+  .legend-bubbles .lb {
+    font-size: 10px;
+  }
+
   .step {
+    min-height: 24vh;
     justify-content: center;
     padding: 0 16px;
-    min-height: 70vh;
+  }
+
+  .step.has-card {
+    min-height: 72vh;
+  }
+
+  .step.is-blank {
+    min-height: 24vh;
   }
 
   .step-card {
     width: 100%;
     max-width: 100%;
+    padding: 20px 22px;
   }
 
+  .step-headline {
+    font-size: 20px;
+  }
+
+  .step-body p {
+    font-size: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .state,
+  .state-bubble,
+  .step-card {
+    transition: none;
+  }
 }
